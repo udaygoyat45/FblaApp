@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block a %}
+
+{% if current_user.words == [] %}
+<div class="container">
+  <div class="card m-3">
+    <h3 class="display-4" style="padding: 2%">
+
+      Start searching the words you don't know on the bar in top right corner
+    </h3>
+  </div>
+</div>
+{% else %}
+<div class="card-group">
+  {% for each in words %}
+  <div class="">
+    <div class="card m-3">
+      <div class="card-body">
+        <h3 class="card-title">{{ each.word }}</h3>
+        <p class="card-text"><small class="text-muted">Your progress:</small></p>
+        <div class="progress" style="height: 3px;">
+          <div class="progress-bar" role="progressbar" style="width: {{ each.level/13 * 100 }}%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock a %}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://kit.fontawesome.com/80bf323a16.js" crossorigin="anonymous"></script>
+
+  <title>Lexicon</title>
+
+</head>
+{% if background_url %}
+
+<body style="background: url( {{ background_url }} );
+     -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;">
+  {% elif background_color %}
+
+  <body style="background-color: {{ background_color }}">
+    {% else %}
+
+    <body style="background-color: white">
+      {% endif %}
+
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Lexicon</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+
+            {% if current_user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Your Words
+              </a>
+
+
+              <div class="dropdown-menu font-weight-light" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item font-weight-light" href="{{ url_for('view') }}">View</a>
+                <a class="dropdown-item font-weight-light" href="{{ url_for('practice') }}">Practice</a>
+              </div>
+
+            </li>
+            {% endif %}
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Your Account
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% if current_user.is_authenticated %}
+                <a class="dropdown-item font-weight-light" href="{{ url_for('logout') }}">Log Out</a>
+                <a class="dropdown-item font-weight-light" href="{{ url_for('account') }}">Account</a>
+
+                {% else %}
+                <a class="dropdown-item font-weight-light" href="{{ url_for('register') }}">Sign Up</a>
+                <a class="dropdown-item font-weight-light" href="{{ url_for('login') }}">Log In</a>
+                {% endif %}
+
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+      {% block a %}
+
+      {% endblock a %}
+
+      {% if js_file %}
+      <script src="{{ url_for('static', filename='js/' + js_file) }} "></script>
+      {% endif %}
+      <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>-->
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="{{url_for('static', filename='js/practice.js') }}"></script>
+      <script>
+        var answer = {}
+
+        $(document).ready(function () {
+          $("#wait").hide();
+
+          $("#submit").click(function () {
+            $("#submit").hide();
+            $("#wait").show();
+            $.ajax({
+              type: 'POST',
+              url: "{{ url_for('review') }}",
+              data: JSON.stringify(answer),
+              contentType: "application/json",
+              success: function (response) { document.write(response); }
+            });
+          });
+
+          $("button").click(function () {
+
+            var name = (this.id).split("");
+            if (name[1] != 'u') {
+              var word = $(("#w" + name[1])).text();
+              if (name[0] == "b")
+                answer[word] = 1;
+              else
+                answer[word] = 0;
+
+              $(("#" + name[1])).fadeOut(500);
+            }
+          });
+        });
+      </script>
+      <script src=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js> </script> </body>
+        </html>

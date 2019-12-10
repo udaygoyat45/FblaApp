@@ -1,0 +1,32 @@
+{% extends "layout4.html" %}
+{% block a %}
+{% if data %}
+<h1 class="display-3 ml-4">
+    Words to review today...
+</h1>
+
+{% for key, value in data.items() %}
+<div class="container">
+    <div class="card border-0 shadow my-5">
+        <div class="card-body p-5" style="line-height: 110%">
+            <h1 class="font-weight-normal">{{ value.word }}</h1>
+            {% for key2, value2 in value.meaning.items() %}
+            <h3 class="font-weight-normal"> {{ key2 }} </h2>
+                <div style="text-indent: 4%">
+                    {% for x, y in value2[0].items() %}
+                    {% if (x == "definition") %}
+                    <h4 class="font-weight-light"> {{ x }}: {{ y }}</h4>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<h1 class="display-3 ml-4">
+    You know all the words. <br> You are done for the day!
+</h1>
+{% endif %}
+{% endblock a %}

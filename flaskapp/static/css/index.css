@@ -1,0 +1,53 @@
+ .navbar {
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+#brand-logo {
+    width: 15%;
+    padding-right: 0px;
+    margin-right: 0px;
+}
+
+#first {
+    background-image: url("../img/airplane-flying(blurred).jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 0px;
+    margin-bottom: 0%;
+}
+
+#second {
+    margin-top: 0%;
+    position: relative;
+}
+
+#second .container {
+    padding-top: 0%;
+}
+
+#endImage {
+    width: 25%;
+    height: auto;
+    margin-top: 10px;
+}
+
+.tinted {
+    /*opacity: 0.8;*/
+    filter: brightness(75%);
+}
+
+#second .fa {
+    font-size: 50px;
+}
+
+#footer .fa {
+    font-size: 30px;
+}
+
+.carousel-inner img {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}

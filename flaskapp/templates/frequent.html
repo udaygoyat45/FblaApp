@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block a %}
+     <!--basic information-->
+     <div class="container m-5">
+        <h1 class="display-4">What is Frequent Flyer Program?</h1>
+        <p class="lead">
+            In case you don't know: frequent flyer program is a program offered in which for every flight you earn
+            points which can then be redeemed for better flights offers, discounts, and free flights later on. The
+            points you get is directly related to your expenditures in our flights. For every 2 dollars , you earn 1
+            point.
+        </p>
+
+        <h1 class="display-4">Benefits</h1>
+        <p class="lead">
+            Once you have accumulated enough points, you can enjoy a lot of benefits:
+            <ul class="list-unstyled">
+                <li>20 points - 1 extra free drink</li>
+                <li>50 points - 1 extra free meal</li>
+                <li>250 points - 1 free economy flight from Georgia to Alabama or Alabama to Georgia</li>
+                <li>400 points - 1 free business class flight from Georiga to Alabama or Alabama to Georgia</li>
+                <li>500 points - 1 free business flight from Alabama or Georgia to any other state</li>
+                <li>2000 points - 1 free first class from flight Alabama to Georgia</li>
+            </ul>
+        </p>
+
+        <h1 class="display-4">How to Apply?</h1>
+        <p class="lead">
+            Your points are registered to your frequent flyer program ID. If you don't have an ID yet, insert your email
+            below to receive an ID in your email. Be sure to use this ID every single time you book a flight to receive points. 
+        </p>
+
+        <form>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">We value your time and will never spam you.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock a %}
