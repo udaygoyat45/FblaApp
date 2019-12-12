@@ -1,6 +1,6 @@
 
 from flask import request, redirect, render_template, url_for, flash, jsonify
-from flaskapp.models import User
+from flaskapp.models import User, Flight
 from flaskapp import db, bcrypt, app, mail
 from flaskapp.forms import LoginForm, RegistrationForm, AccountForm, RequestResetForm, ResetPasswordForm
 from datetime import datetime
@@ -22,7 +22,8 @@ def frequent ():
 @app.route("/book")
 @login_required
 def book ():
-    return render_template("book.html", title="Book A Flight")
+    flights = Flight.query.all()
+    return render_template("book.html", title="Book A Flight", flights=flights)
 
 @app.route("/credits")
 def credits ():
@@ -104,6 +105,12 @@ def login ():
             flash("Login Unccessful. Please check username and password", 'danger')
     return render_template("login.html", name="login", head=False, form=form, forms=True, title="Login", image="../static/img/plane.jpg")
 
+@login_required
+@app.route("/final", methods=['GET', 'POST'])
+def final ():
+    if (request.method == 'GET'):
+        return render_template("final.html")
+
 
 #need to work on this one
 @app.route("/forgot", methods=['GET', 'POST'])
@@ -111,6 +118,8 @@ def forgot ():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     return render_template('home.html')
+
+
 '''
 @app.route("/search", methods=['GET', 'POST'])
 def search():
