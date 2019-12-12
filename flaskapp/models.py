@@ -31,7 +31,9 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.password}')"
 
+#not needed anymore
 
+'''
 class Word(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     word = db.Column(db.String(45), unique=True, nullable=False)
@@ -42,3 +44,4 @@ class Word(db.Model):
 
     def __repr__(self):
         return f"Word('{self.word}', '{self.time}', '{self.due_date}', '{self.user_id}', '{self.level}')"
+'''

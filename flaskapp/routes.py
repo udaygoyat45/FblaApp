@@ -1,6 +1,6 @@
 
 from flask import request, redirect, render_template, url_for, flash, jsonify
-from flaskapp.models import User, Word
+from flaskapp.models import User
 from flaskapp import db, bcrypt, app, mail
 from flaskapp.forms import LoginForm, RegistrationForm, AccountForm, RequestResetForm, ResetPasswordForm
 from datetime import datetime
@@ -18,8 +18,9 @@ def home ():
 def frequent ():
     return render_template("frequent.html", title="Frequent Flyer Program")
 
-@login_required
+
 @app.route("/book")
+@login_required
 def book ():
     return render_template("book.html", title="Book A Flight")
 
@@ -31,26 +32,85 @@ def credits ():
 def job ():
     return render_template("job.html", title="Jobs Available")
 
+#the one below is only for testing purposes
 @app.route("/layout")
 def layout ():
     return render_template("layout.html")
 
-@app.route("/account")
+
+@app.route("/account", methods=['GET', 'POST'])
+@login_required
 def account ():
-    return render_template("layout.html")
+    form = AccountForm()
+    user = current_user
+    if form.validate_on_submit():
+        
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            if (form.username.data != ""):
+                user.username = form.username.data
+            if (form.email.data != ""):
+                user.email = form.email.data
+
+            db.session.commit()
+            flash("Change Successful", 'success')
+            return redirect(url_for('home'))
+        else:
+            flash("Change Unccessful. Please check password", 'danger')
+    return render_template("account.html", title="Your Account", form=form, user=user, forms=True)
+
 
 @app.route("/logout")
+@login_required
 def logout ():
-    return render_template("layout.html")
+    logout_user()
+    return redirect(url_for('home'))
 
-@app.route("/register")
+@app.route("/register", methods=["GET", 'POST'])
 def register ():
-    return render_template("layout.html")
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        print("this is atleast working")
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data.encode('utf-8'))
+        user = User(username=form.username.data,
+                    email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
 
-@app.route("/login")
+        flash("Your account has been created, and now you can login 👍", 'success')
+        return redirect(url_for('login'))
+        
+    return render_template("register.html", form=form, head=False, forms=True, title="Register", image="../static/img/plane.jpg")
+
+    
+
+@app.route("/login", methods=["GET", "POST"])
 def login ():
-    return render_template("layout.html")
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            flash("Login Successful. Welcome 😄", 'success')
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('home'))
+        else:
+            flash("Login Unccessful. Please check username and password", 'danger')
+    return render_template("login.html", name="login", head=False, form=form, forms=True, title="Login", image="../static/img/plane.jpg")
 
+
+#need to work on this one
+@app.route("/forgot", methods=['GET', 'POST'])
+def forgot ():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    return render_template('home.html')
 '''
 @app.route("/search", methods=['GET', 'POST'])
 def search():
