@@ -109,8 +109,10 @@ def login ():
 @app.route("/final", methods=['GET', 'POST'])
 def final ():
     if (request.method == 'GET'):
-        return render_template("final.html")
+        flight_id = int(request.args.get("id"))
+        flight = Flight.query.get(flight_id)
 
+        return render_template("final.html", flight=flight)
 
 #need to work on this one
 @app.route("/forgot", methods=['GET', 'POST'])

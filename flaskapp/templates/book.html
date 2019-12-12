@@ -3,13 +3,13 @@
 {% block a %}
 <!--basic information-->
 {% for flight in flights %}
-<div class="card text-center" style="width: 18rem;">
+<div class="card text-center border-dark m-3" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">Price ${{flight.price}}</h5>
-    <p class="card-text"> Time {{flight.date}}</p>
+    <p class="card-text"> {{flight.date.strftime("%I:%M %p, %B %d, %Y")}}</p>
     <p class="card-text">From {{flight.from_location}} To {{flight.to_location}}</p>
     <p class="card-text">Seats remaining are {{ (100 - flight.total) }}</p>
-    <a href="{{url_for('final', id=flight.id)}}" class="btn btn-primary">Go somewhere</a>
+    <a href="{{url_for('final', id=flight.id)}}" class="btn btn-primary">Book Flight</a>
   </div>
 </div>
 {% endfor %}
