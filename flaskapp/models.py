@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), unique=True, nullable=False)
     points = db.Column(db.Integer, default=0)
+    flyer_id = db.Column(db.String(10), default=None)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(app.config['SECRET_KEY'], expires_sec)
@@ -32,6 +33,11 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.password}')"
 
+class UserFlight (db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    flight_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
 class Flight(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     from_location = db.Column(db.String(20), unique=True, nullable=False)
@@ -43,9 +49,7 @@ class Flight(db.Model):
     def __repr__(self):
         return f"Flight('{self.from_location}', '{self.to_location}', '{self.date}', '{self.total}')"
 
-
 #not needed anymore
-
 '''
 class Word(db.Model):
     id = db.Column(db.Integer, primary_key=True)

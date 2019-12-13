@@ -35,6 +35,10 @@ class LoginForm(FlaskForm):
     remember = BooleanField("Remember Me")
     submit = SubmitField('Log In')
 
+class RedeemPoints(FlaskForm):
+    flight_id = StringField("Your Frequent Flyer ID", validators=[DataRequired()])
+    submit = SubmitField("Redeem")
+
 
 class AccountForm(FlaskForm):
     username = StringField('Username',

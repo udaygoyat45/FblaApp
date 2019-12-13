@@ -1,13 +1,14 @@
 
 from flask import request, redirect, render_template, url_for, flash, jsonify
-from flaskapp.models import User, Flight
+from flaskapp.models import User, Flight, UserFlight
 from flaskapp import db, bcrypt, app, mail
-from flaskapp.forms import LoginForm, RegistrationForm, AccountForm, RequestResetForm, ResetPasswordForm
+from flaskapp.forms import LoginForm, RegistrationForm, AccountForm, RequestResetForm, ResetPasswordForm, RedeemPoints
 from datetime import datetime
 from flask_login import login_user, current_user, logout_user, login_required
 from flaskapp.imagegen import generate_url
 from ast import literal_eval
 from flask_mail import Message
+from flaskapp.generate import generate_id
 
 @app.route("/")
 @app.route("/home")
@@ -76,12 +77,24 @@ def register ():
         print("this is atleast working")
         hashed_password = bcrypt.generate_password_hash(
             form.password.data.encode('utf-8'))
+        new_flyer_id = generate_id(10)
         user = User(username=form.username.data,
-                    email=form.email.data, password=hashed_password)
+                    email=form.email.data, password=hashed_password, flyer_id=new_flyer_id)
         db.session.add(user)
         db.session.commit()
 
         flash("Your account has been created, and now you can login 👍", 'success')
+        
+        msg = Message("Welcome to Gooday Airlines", recipients=[form.email.data])
+        msg.body = f'''Hello, {form.username.data}
+
+        Thank you for registering to Gooday Airlines. I hope you enjoy our service in the future.
+
+        Your Frequent Flyer ID is {new_flyer_id}. Please save this ID somwhere since you would use 
+        this everytime you have redeem your points. '''
+
+        mail.send(msg)
+
         return redirect(url_for('login'))
         
     return render_template("register.html", form=form, head=False, forms=True, title="Register", image="../static/img/plane.jpg")
@@ -111,8 +124,32 @@ def final ():
     if (request.method == 'GET'):
         flight_id = int(request.args.get("id"))
         flight = Flight.query.get(flight_id)
+        flight.total += 1
+
+        current_flight = UserFlight(user_id=current_user.id, flight_id=flight_id)
+        db.session.add(current_flight)
+        db.session.commit()
 
         return render_template("final.html", flight=flight)
+
+#still working on this one lol
+@login_required
+@app.route("/redeem", methods=['GET', 'POST']) 
+def redeem ():
+    form = RedeemPoints()
+    if form.validate_on_submit():
+        current_flyer_id = form.flight_id.data
+        if (current_flyer_id == current_user.flight_id):
+            print("this is good")
+        else:
+            flash("Your ID didn't match with your account's ID", 'danger')
+    else:
+        return render_template("redeem.html")
+
+
+
+
+
 
 #need to work on this one
 @app.route("/forgot", methods=['GET', 'POST'])
