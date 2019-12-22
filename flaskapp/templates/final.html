@@ -1,4 +1,9 @@
 {% extends "layout.html" %}
 {% block a %}
-    <p class="lead">Good job!</p>
+<button>View All Flights</button>
+<h1 class="display-3">Your Flight</h1>
+
+
+<p class="lead">Once you book a flight, you pay right now, or you can pay us at the airport itself. If you would like to
+    pay at the airport, please <a href="{{url_for('proceed', flight_id=flight.id, paid=False)}}">click here</a></p>
 {% endblock a %}

@@ -68,8 +68,11 @@
       {% endif %}
     </div>
 
-    {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase") }}
-
+    {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase mt-3") }}
+   
+    <div class="links">
+      <a href="{{url_for('login')}}">Login Instead</a>
+    </div> 
 
   </form>
 {% endblock a %}

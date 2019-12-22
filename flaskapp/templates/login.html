@@ -41,5 +41,12 @@
         </div>
 
         {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase") }}
+
+        <div class="links">
+            <a href="{{ url_for('register') }}" >Sign Up</a>
+            <br>
+            <a href="{{ url_for('reset_request') }}">Forgot Password</a>
+        </div>
+        
     </form>
 {% endblock a %}

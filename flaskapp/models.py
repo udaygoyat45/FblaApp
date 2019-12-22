@@ -40,9 +40,9 @@ class UserFlight (db.Model):
 
 class Flight(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    from_location = db.Column(db.String(20), unique=True, nullable=False)
-    to_location = db.Column(db.String(20), unique=True, nullable=False)
-    date = db.Column(db.DateTime)
+    from_location = db.Column(db.String(20), unique=False, nullable=False)
+    to_location = db.Column(db.String(20), unique=False, nullable=False)
+    date = db.Column(db.String(20), unique=False, nullable=False)
     total = db.Column(db.Integer, nullable=False, default=0)
     price = db.Column(db.Integer, nullable=False)
 
