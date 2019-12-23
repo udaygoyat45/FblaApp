@@ -1,15 +1,21 @@
 {% extends "layout.html" %}
 {% block a %}
-<!--basic information-->
-{% for flight in flights %}
-<div class="card text-center border-dark m-3" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Price ${{flight.price}}</h5>
-    <p class="card-text"> {{flight.date.strftime("%I:%M %p, %B %d, %Y")}}</p>
-    <p class="card-text">From {{flight.from_location}} To {{flight.to_location}}</p>
-    <p class="card-text">Seats remaining are {{ (100 - flight.total) }}</p>
-    <a href="{{url_for('final', id=flight.id)}}" class="btn btn-primary">Book Flight</a>
-  </div>
-</div>
-{% endfor %}
+    <div class="row">
+        <div class="card-group justify-content-center">
+            {% for flight in flights %}
+            <div class="col-md-4">
+                <div id="flight" class="card rounded-0 p-4 m-3"
+                    style="height: 25rem; background-color: {{nice_colors[loop.index % nice_colors|length]}};">
+
+                    <h3><b>From {{flight.from_location}}</b></h3>
+                    <h3><b>To {{flight.to_location}}</b></h3>
+                    <br>
+                    <h5 style="color: white">Seats Remaining: {{100-flight.total}}<br>Price: ${{flight.price}}<br>Next
+                        Flight: {{flight.date}}</h5>
+                    <a href="{{url_for('final', id=flight.id)}}" class="stretched-link">{{index}}</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock a %}

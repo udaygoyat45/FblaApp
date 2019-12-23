@@ -10,6 +10,9 @@ from ast import literal_eval
 from flask_mail import Message
 from flaskapp.generate import generate_id
 
+#constants are below
+nice_colors = ["rgb(241,67,87)", "rgb(83,162,227)", "rgb(244,173,73)", "rgb(103,87,226)", "rgb(105,222,146)", "rgb(105,222,146)"]
+
 @app.route("/")
 @app.route("/home")
 def home ():
@@ -24,7 +27,7 @@ def frequent ():
 @login_required
 def book ():
     flights = Flight.query.all()
-    return render_template("book.html", title="Book A Flight", flights=flights)
+    return render_template("book.html", title="Book A Flight", flights=flights, nice_colors=nice_colors)
 
 @app.route("/credits")
 def credits ():
@@ -128,9 +131,9 @@ def final ():
 
         current_flight = UserFlight(user_id=current_user.id, flight_id=flight_id)
         db.session.add(current_flight)
-        db.session.commit()
+        #db.session.commit()
 
-        return render_template("final.html", flight=flight)
+    return render_template("final.html", flight=flight, name="Your Flight", head=True, title="Your Flight", forms=False)
 
 #still working on this one lol
 @login_required
@@ -156,7 +159,6 @@ def send_reset_email(user):
 
     mail.send(msg)
 
-#need to work on this one
 @app.route("/reset_request", methods=['GET', 'POST'])
 def reset_request ():
     if current_user.is_authenticated:
@@ -188,6 +190,9 @@ def reset_token(token):
         return redirect(url_for('login'))
     return render_template("reset_token.html", name="Reset Password", head=False, form=form, forms=True, title="Reset Password", image="../static/img/plane.jpg")
 
+@app.route("/done")
+def done ():
+    return redirect(url_for('home'))
 '''
 @app.route("/search", methods=['GET', 'POST'])
 def search():

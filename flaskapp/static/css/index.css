@@ -3,7 +3,6 @@
     margin-top: 0px;
 }
 
-
 #brand-logo {
     width: 15%;
     padding-right: 0px;
@@ -59,4 +58,25 @@
 
 .links {
     padding: 2%;
+}
+
+.stretched-link::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: auto;
+    content: "";
+    background-color: rgba(0,0,0,0);
+}
+
+#flight.card {
+    transition: transform .2s;
+}
+
+#flight.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
