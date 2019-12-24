@@ -2,25 +2,68 @@
 {% block a %}
 <a class="btn m-2" href="{{ url_for('book') }}"> <i class="fa fa-arrow-left"></i></a>
 <div class="container">
-    <h3>Flight Information</h3>
-    <p>This Flight is from {{flight.from_location}} to {{flight.to_location}}. This flight is on {{flight.date}}s and
-        the price is ${{flight.price}}.</p>
+  <h3>Flight Information</h3>
+  <p class="lead">This Flight is from {{flight.from_location}} to {{flight.to_location}}. This flight is on
+    {{flight.date.strftime("%H:%M")}} for all the specified dates below and
+    the price is ${{flight.price}}. Please show up to the specified airport atleast 10 minutes before the specific time.
+    Now, please select one of the dates to finalize your booking.</p>
 
-    <h4>Select a date:</h4>
-    <div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="#">Action</a>
-      <a class="dropdown-item" href="#">Another action</a>
-      <a class="dropdown-item" href="#">Something else here</a>
+  <form class="form-signin" method="POST" action="">
+    {{ form.hidden_tag() }}
+    <div class="form-label-group">
+      {{ form.date.label(for="inputUsername") }}
+
+      {% if form.date.errors %}
+      {{ form.date(id="inputUsername", class="form-control is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.date.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+
+      {% else %}
+      {{ form.date(id="inputUsername", class="form-control") }}
+      {% endif %}
+
     </div>
-  </div>
-  <input type="text" class="form-control">
-</div>
 
-    <p class="text-muted">The paying process was not included for this website demonstration</p>
-    <a href="{{ url_for('done') }}" class="btn m-2 btn-success">Finalize</a>
+    <div class="form-label-group">
+      {{ form.children_passengars.label(for="inputEmail") }}
+
+      {% if form.children_passengars.errors %}
+      {{ form.children_passengars(id="inputEmail", class="form-control is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.children_passengars.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      {{ form.children_passengars(id="inputEmail", class="form-control") }}
+      {% endif %}
+    </div>
+
+
+    <div class="form-label-group">
+      {{ form.adult_passengars.label(for="inputPassword") }}
+
+      {% if form.adult_passengars.errors %}
+      {{ form.adult_passengars(id="inputPassword", class="form-control is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.adult_passengars.errors %}
+        <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% else %}
+      {{ form.adult_passengars(id="inputPassword", class="form-control") }}
+      {% endif %}
+
+    </div>
+
+    {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase mt-3") }}
+
+  </form>
+
+  <p class="text-muted mt-5">*** The paying process was not included for this website demonstration. ***</p>
 </div>
 
 {% endblock a %}

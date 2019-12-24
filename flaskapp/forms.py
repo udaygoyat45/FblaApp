@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flaskapp.models import User
 
@@ -35,8 +35,10 @@ class LoginForm(FlaskForm):
     remember = BooleanField("Remember Me")
     submit = SubmitField('Log In')
 
+
 class RedeemPoints(FlaskForm):
-    flight_id = StringField("Your Frequent Flyer ID", validators=[DataRequired()])
+    flight_id = StringField("Your Frequent Flyer ID",
+                            validators=[DataRequired()])
     submit = SubmitField("Redeem")
 
 
@@ -49,6 +51,7 @@ class AccountForm(FlaskForm):
                              validators=[DataRequired(), Length(min=10, max=120)])
     submit = SubmitField("Apply")
 
+
 class RequestResetForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email(), Length(max=120)])
@@ -57,12 +60,23 @@ class RequestResetForm(FlaskForm):
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is None:
-            raise ValidationError("There is no account registered with this email")
-    
+            raise ValidationError(
+                "There is no account registered with this email")
+
+
 class ResetPasswordForm(FlaskForm):
     password = PasswordField('Password',
                              validators=[DataRequired(), Length(min=10, max=120)])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField("Reset Password")
-    
+
+
+class FlightOptions(FlaskForm):
+    date = SelectField("Date")
+    children_passengars = SelectField(
+        "Minors", choices=[("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5")])
+    adult_passengars = SelectField(
+        "Adults", choices=[("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5")])
+    flight_id = 0
+    submit = SubmitField("Book My Flight")

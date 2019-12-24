@@ -37,12 +37,14 @@ class UserFlight (db.Model):
     flight_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date = db.Column(db.DateTime, nullable=False)
+    children = db.Column(db.Integer, nullable=False)
+    adults = db.Column(db.Integer, nullable=False)
 
 class Flight(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     from_location = db.Column(db.String(20), unique=False, nullable=False)
     to_location = db.Column(db.String(20), unique=False, nullable=False)
-    date = db.Column(db.String(20), unique=False, nullable=False)
+    date = db.Column(db.DateTime, unique=False, nullable=False)
     total = db.Column(db.Integer, nullable=False, default=0)
     price = db.Column(db.Integer, nullable=False)
 
