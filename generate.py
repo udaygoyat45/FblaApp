@@ -24,7 +24,7 @@ airports = ["Birmingham-Shuttlesworth International Airport (BHM)",
 for i in range(len(airports)):
     for j in range(len(airports)):
         if (i != j):
-            temp = Flight(from_location=airports[i], to_location=airports[j], date=datetime.datetime.now()+datetime.timedelta(days=random.randint(1, 6)), price=random.randint(300, 500), total=0)
+            temp = Flight(from_location=airports[i], to_location=airports[j], date=datetime.datetime.now()+datetime.timedelta(days=random.randint(1, 6)), price=random.randint(300, 500))
             db.session.add(temp)
             db.session.commit()
 

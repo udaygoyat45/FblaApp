@@ -10,7 +10,7 @@
                     <h3><b>From {{flight.from_location}}</b></h3>
                     <h3><b>To {{flight.to_location}}</b></h3>
                     <br>
-                    <h5 style="color: white">Seats Remaining: {{100-flight.total}}<br>Price: ${{flight.price}}<br>Next
+                    <h5 style="color: white">Price: ${{flight.price}}<br>Next
                         Flight: {{flight.date.strftime("%m/%d/%Y")}}</h5>
                     <a href="{{url_for('final', id=flight.id)}}" class="stretched-link">{{index}}</a>
                 </div>

@@ -40,16 +40,19 @@ class UserFlight (db.Model):
     children = db.Column(db.Integer, nullable=False)
     adults = db.Column(db.Integer, nullable=False)
 
+    def __repr__(self):
+        return f"Flight('{self.flight_id}', '{self.user_id}', '{self.date}', '{self.children}', '{self.adults}')"
+
 class Flight(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     from_location = db.Column(db.String(20), unique=False, nullable=False)
     to_location = db.Column(db.String(20), unique=False, nullable=False)
     date = db.Column(db.DateTime, unique=False, nullable=False)
-    total = db.Column(db.Integer, nullable=False, default=0)
+    
     price = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
-        return f"Flight('{self.from_location}', '{self.to_location}', '{self.date}', '{self.total}')"
+        return f"Flight('{self.from_location}', '{self.to_location}', '{self.date}')"
 
 #not needed anymore
 '''

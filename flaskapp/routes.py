@@ -2,7 +2,7 @@
 from flask import request, redirect, render_template, url_for, flash, jsonify
 from flaskapp.models import User, Flight, UserFlight
 from flaskapp import db, bcrypt, app, mail
-from flaskapp.forms import LoginForm, RegistrationForm, AccountForm, RequestResetForm, ResetPasswordForm, RedeemPoints, FlightOptions
+from flaskapp.forms import LoginForm, RegistrationForm, AccountForm, RequestResetForm, ResetPasswordForm, RedeemPoints, FlightOptions, EditFlightOptions
 import datetime
 from flask_login import login_user, current_user, logout_user, login_required
 from flaskapp.imagegen import generate_url
@@ -10,10 +10,8 @@ from ast import literal_eval
 from flask_mail import Message
 from flaskapp.generate import generate_id
 
-# constants are below
 nice_colors = ["rgb(241,67,87)", "rgb(83,162,227)", "rgb(244,173,73)",
                "rgb(103,87,226)", "rgb(105,222,146)", "rgb(241,60,31)", "rgb(68,49,141)"]
-
 
 @app.route("/")
 @app.route("/home")
@@ -154,6 +152,7 @@ def final():
                           user_id=current_user.id, flight_id=form.flight_id, children=int(form.children_passengars.data), adults=int(form.adult_passengars.data))
 
         db.session.add(curr)
+        db.session.add(flight)
         db.session.commit()
 
         flash("Your flight booking was successful", 'success')
@@ -193,7 +192,7 @@ def send_reset_email(user):
 @app.route("/reset_request", methods=['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        logout_user()
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -223,11 +222,56 @@ def reset_token(token):
     return render_template("reset_token.html", name="Reset Password", head=False, form=form, forms=True, title="Reset Password", image="../static/img/plane.jpg")
 
 
-@app.route("/done")
-def done():
-    return redirect(url_for('home'))
+@app.route('/view')
+@login_required
+def view():
+    all_flights = UserFlight.query.filter_by(user_id=current_user.id).all()
+    flights_info = []
+    for each in all_flights:
+        flights_info.append(Flight.query.get(each.flight_id))
+        print(each.flight_id)
+    return render_template('view.html', flights=all_flights, flights_info=flights_info, title="View Your Booked Flights", nice_colors=nice_colors)
+
+@app.route('/edit', methods=['GET', 'POST'])
+@login_required
+def edit():
+    form = EditFlightOptions()
+    userflight_id = int(request.args.get('id'))
+    the_flight = UserFlight.query.get(userflight_id)
+    flight_id = int(request.args.get("id"))
+    flight = Flight.query.get(flight_id)
+
+    curr = flight.date
+    form.date.choices = []
+    form.date.choices.append(
+        (curr.strftime("%m/%d/%Y %S%M%H"), curr.strftime("%M/%d/%Y")))
+
+    for i in range(7):
+        curr += datetime.timedelta(days=7)
+        form.date.choices.append(
+            (curr.strftime("%m/%d/%Y %S%M%H"), curr.strftime("%M/%d/%Y")))
+    
+    if form.validate_on_submit():
+        print("hakuna matatata bruh ---------------------------------")
+        if (form.destroy.data):
+            db.session.delete(the_flight)
+            db.session.commit()
+
+            return redirect(url_for('view'))
+        else:
+            the_flight.date = datetime.datetime.strptime(form.date.data, '%m/%d/%Y %S%M%H')
+            the_flight.children = int(form.children_passengars.data)
+            the_flight.adults = int(form.adult_passengars.data)
+
+            db.session.commit()
+
+            return redirect(url_for('view'))
+    
+    return render_template("edit.html", flight=flight, name="Your Booking", head=True, title="Your Booking", forms=False, form=form)
 
 
+    
+    
 '''
 @app.route("/search", methods=['GET', 'POST'])
 def search():

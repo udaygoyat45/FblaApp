@@ -80,3 +80,13 @@ class FlightOptions(FlaskForm):
         "Adults", choices=[("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5")])
     flight_id = 0
     submit = SubmitField("Book My Flight")
+
+class EditFlightOptions(FlaskForm):
+    date = SelectField("Date")
+    children_passengars = SelectField(
+        "Minors", choices=[("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5")])
+    adult_passengars = SelectField(
+        "Adults", choices=[("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5")])
+    flight_id = 0
+    destroy = SubmitField("Erase this Booking")
+    submit = SubmitField("Edit My Flight")

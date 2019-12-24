@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block a %}
+<div class="row">
+    <div class="card-group justify-content-center">
+        {% for flight in flights %}
+        <div class="col-md-4">
+            <div id="flight" class="card rounded-0 p-4 m-3"
+                style="height: 25rem; background-color: {{nice_colors[loop.index % nice_colors|length]}};">
+
+                <h3><b>From {{flights_info[loop.index-1].from_location}}</b></h3>
+                <h3><b>To {{flights_info[loop.index-1].to_location}}</b></h3>
+                <br>
+                <h5 style="color: white">Price: ${{flights_info[loop.index-1].price}}<br>Date:
+                    {{flight.date.strftime("%m/%d/%Y")}} <br> Minors: {{flight.children}} <br> Adults:
+                    {{flight.adults}}</h5>
+                <a href="{{url_for('edit', id=flight.id)}}" class="stretched-link">{{index}}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock a %}
