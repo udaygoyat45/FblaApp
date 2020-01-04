@@ -98,7 +98,7 @@ def register():
 
         Thank you for registering to Gooday Airlines. I hope you enjoy our service in the future.
 
-        Your Frequent Flyer ID is {new_flyer_id}. Please save this ID somwhere since you would use 
+        Your Frequent Flyer ID is {new_flyer_id}. Please save this ID somwhere since you would use
         this everytime you have redeem your points. '''
 
         mail.send(msg)
@@ -116,7 +116,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        if user and bcrypt.check_password_hash(user.password, form.password.data.encode('utf-8')):
             flash("Login Successful. Welcome 😄", 'success')
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
@@ -155,7 +155,7 @@ def final():
         db.session.add(flight)
         db.session.commit()
 
-        flash("Your flight booking was successful", 'success')
+        flash("Your flight booking was successful 👍👍.", 'success')
 
         return redirect(url_for('home'))
 
@@ -181,7 +181,7 @@ def redeem():
 def send_reset_email(user):
     token = user.get_reset_token()
     msg = Message('Password Reset Request', recipients=[user.email])
-    msg.body = f'''To reset your password, click on this link: 
+    msg.body = f'''To reset your password, click on this link:
     {url_for('reset_token', token=token, _external=True)}
 
     If you did not make this request, don't worry you are safe 😁'''
@@ -250,7 +250,7 @@ def edit():
         curr += datetime.timedelta(days=7)
         form.date.choices.append(
             (curr.strftime("%m/%d/%Y %S%M%H"), curr.strftime("%M/%d/%Y")))
-    
+
     if form.validate_on_submit():
         print("hakuna matatata bruh ---------------------------------")
         if (form.destroy.data):
@@ -266,12 +266,12 @@ def edit():
             db.session.commit()
 
             return redirect(url_for('view'))
-    
+
     return render_template("edit.html", flight=flight, name="Your Booking", head=True, title="Your Booking", forms=False, form=form)
 
 
-    
-    
+
+
 '''
 @app.route("/search", methods=['GET', 'POST'])
 def search():
@@ -374,7 +374,7 @@ def account():
     form = AccountForm()
     user = current_user
     if form.validate_on_submit():
-        
+
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             if (form.username.data != ""):
                 user.username = form.username.data
@@ -444,7 +444,7 @@ def send_reset_email(user):
     print(token) #omg change this later
     print(user.email)
     msg = Message('Password Reset Request', recipients=[user.email])
-    msg.body = f''' '''To reset your password, click on this link: 
+    msg.body = f''' '''To reset your password, click on this link:
     {url_for('reset_token', token=token, _external=True)}
 
     If you did not make this request, don't worry you are safe 😁'''
