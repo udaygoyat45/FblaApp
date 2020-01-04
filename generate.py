@@ -6,15 +6,9 @@ import random
 db.drop_all()
 db.create_all()
 
-uday = User(username="udaygoyat45", email="udaygoyat45@gmail.com", password=bcrypt.generate_password_hash(
-            "udaygoyat#4".encode('utf-8')), points=0)
-
-db.session.add(uday)
-db.session.commit()
-
 outfile = open("out.out", "w+")
-airports = ["Birmingham-Shuttlesworth International Airport (BHM)", 
-            "Huntsville International Airport (HSV)", 
+airports = ["Birmingham-Shuttlesworth International Airport (BHM)",
+            "Huntsville International Airport (HSV)",
             "Addison Municipal Airport",
             "Hartsfield-Jackson Atlanta International Airport (ATL)",
             "Augusta Regional Airport (AGS)",
