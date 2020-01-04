@@ -1,21 +1,81 @@
 {% extends "layout.html" %}
 {% block a %}
-    <div class="row">
-        <div class="card-group justify-content-center">
-            {% for flight in flights %}
-            <div class="col-md-4">
-                <div id="flight" class="card rounded-0 p-4 m-3"
-                    style="height: 25rem; background-color: {{nice_colors[loop.index % nice_colors|length]}};">
 
-                    <h3><b>From {{flight.from_location}}</b></h3>
-                    <h3><b>To {{flight.to_location}}</b></h3>
-                    <br>
-                    <h5 style="color: white">Price: ${{flight.price}}<br>Next
-                        Flight: {{flight.date.strftime("%m/%d/%Y")}}</h5>
-                    <a href="{{url_for('final', id=flight.id)}}" class="stretched-link">{{index}}</a>
-                </div>
+<div class="container m-4 mx-auto">
+    <form class="form-signin" method="POST" action="">
+        {{ form.hidden_tag() }}
+        <div class="form-label-group">
+            {{ form.from_location.label() }}
+
+            {% if form.from_location.errors %}
+            {{ form.date(id="inputUsername", class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.from_location.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
             </div>
-            {% endfor %}
+
+            {% else %}
+            {{ form.from_location(class="form-control") }}
+            {% endif %}
+
+        </div>
+
+        <div class="form-label-group">
+            {{ form.to_location.label() }}
+
+            {% if form.to_location.errors %}
+            {{ form.to_location(id="inputEmail", class="form-control is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.to_location.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.to_location(id="inputEmail", class="form-control") }}
+            {% endif %}
+        </div>
+        {{ form.submit(class="btn btn-lg btn-primary btn-block mt-3") }}
+    </form>
+</div>
+
+
+{% if total == 1 %}
+<div class="row">
+    <div class="card-group">
+        <div class="col-md-5">
+            <div id="flight" class="card rounded-0 p-4 m-3"
+                style="height: 25rem; border-color: {{nice_colors[0]}}; background-color: rgb(221,160,221);">
+
+                <h3><b>From {{flights[0].from_location}}</b></h3>
+                <h3><b>To {{flights[0].to_location}}</b></h3>
+                <br>
+                <h5 style="color: white">Price: ${{flights[0].price}}<br>Next
+                    Flight: {{flights[0].date.strftime("%m/%d/%Y")}}</h5>
+                <a href="{{url_for('final', id=flights[0].id)}}" class="stretched-link">{{index}}</a>
+            </div>
         </div>
     </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="card-group">
+        {% for flight in flights %}
+        <div class="col-4">
+            <div id="flight" class="card rounded-0 p-4 m-3"
+                style="height: 25rem; border-color: {{nice_colors[loop.index % nice_colors|length]}}; background-color: rgb(221,160,221);">
+
+                <h3><b>From {{flight.from_location}}</b></h3>
+                <h3><b>To {{flight.to_location}}</b></h3>
+                <br>
+                <h5 style="color: white">Price: ${{flight.price}}<br>Next
+                    Flight: {{flight.date.strftime("%m/%d/%Y")}}</h5>
+                <a href="{{url_for('final', id=flight.id)}}" class="stretched-link">{{index}}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+   
 {% endblock a %}

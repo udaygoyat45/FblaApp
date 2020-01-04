@@ -90,3 +90,9 @@ class EditFlightOptions(FlaskForm):
     flight_id = 0
     destroy = SubmitField("Erase this Booking")
     submit = SubmitField("Edit My Flight")
+
+class SearchFlights(FlaskForm):
+    from_location = SelectField("From Location")
+    to_location = SelectField("To Location")
+
+    submit = SubmitField("Filter")

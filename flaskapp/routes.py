@@ -2,7 +2,7 @@
 from flask import request, redirect, render_template, url_for, flash, jsonify
 from flaskapp.models import User, Flight, UserFlight
 from flaskapp import db, bcrypt, app, mail
-from flaskapp.forms import LoginForm, RegistrationForm, AccountForm, RequestResetForm, ResetPasswordForm, RedeemPoints, FlightOptions, EditFlightOptions
+from flaskapp.forms import LoginForm, RegistrationForm, AccountForm, RequestResetForm, ResetPasswordForm, RedeemPoints, FlightOptions, EditFlightOptions, SearchFlights
 import datetime
 from flask_login import login_user, current_user, logout_user, login_required
 from flaskapp.imagegen import generate_url
@@ -12,6 +12,7 @@ from flaskapp.generate import generate_id
 
 nice_colors = ["rgb(241,67,87)", "rgb(83,162,227)", "rgb(244,173,73)",
                "rgb(103,87,226)", "rgb(105,222,146)", "rgb(241,60,31)", "rgb(68,49,141)"]
+
 
 @app.route("/")
 @app.route("/home")
@@ -23,12 +24,45 @@ def home():
 def frequent():
     return render_template("frequent.html", title="Frequent Flyer Program")
 
+def set_up_choices():
+    airports = set()
+    for flight in Flight.query.all():
+        airports.add(flight.from_location)
 
-@app.route("/book")
+    final = []
+    final.append(("", "All Flights"))
+    for airport in airports:
+        final.append((airport, airport))
+    
+    return final
+
+@app.route("/book", methods=["GET", 'POST'])
 @login_required
 def book():
+    form = SearchFlights()
+    form.from_location.choices = set_up_choices()
+    form.to_location.choices = set_up_choices()
+
+    flights = None
+        
+    if form.validate_on_submit():
+        from_location_id = form.from_location.data
+        to_location_id = form.to_location.data
+
+        if (from_location_id == "" and to_location_id == ""):
+            flights = Flight.query.all()
+        elif (from_location_id == ""):
+            flights = Flight.query.filter_by(to_location=to_location_id).all()
+        elif (to_location_id == ""):
+            flights = Flight.query.filter_by(from_location=from_location_id).all()
+        else:
+            flights = Flight.query.filter_by(from_location=from_location_id, to_location=to_location_id).all()
+
+        total = len(flights)
+        return render_template("book.html", title="Book A Flight", form=form, flights=flights, nice_colors=nice_colors, total=total)
+        
     flights = Flight.query.all()
-    return render_template("book.html", title="Book A Flight", flights=flights, nice_colors=nice_colors)
+    return render_template("book.html", title="Book A Flight", flights=flights, form=form, nice_colors=nice_colors)
 
 
 @app.route("/credits")
@@ -163,7 +197,6 @@ def final():
     return render_template("final.html", flight=flight, name="Your Flight", head=True, title="Your Flight", forms=False, form=form)
 
 
-# still working on this one lol
 @login_required
 @app.route("/redeem", methods=['GET', 'POST'])
 def redeem():
@@ -232,6 +265,7 @@ def view():
         print(each.flight_id)
     return render_template('view.html', flights=all_flights, flights_info=flights_info, title="View Your Booked Flights", nice_colors=nice_colors)
 
+
 @app.route('/edit', methods=['GET', 'POST'])
 @login_required
 def edit():
@@ -259,7 +293,8 @@ def edit():
 
             return redirect(url_for('view'))
         else:
-            the_flight.date = datetime.datetime.strptime(form.date.data, '%m/%d/%Y %S%M%H')
+            the_flight.date = datetime.datetime.strptime(
+                form.date.data, '%m/%d/%Y %S%M%H')
             the_flight.children = int(form.children_passengars.data)
             the_flight.adults = int(form.adult_passengars.data)
 
@@ -269,7 +304,11 @@ def edit():
 
     return render_template("edit.html", flight=flight, name="Your Booking", head=True, title="Your Booking", forms=False, form=form)
 
-
+# @app.route("/search")
+# @login_required
+# def search ():
+#     form = searchFlight()
+#     if form.validate_on_submit():
 
 
 '''
