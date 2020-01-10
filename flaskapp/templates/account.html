@@ -42,10 +42,10 @@
     </div>
     {% else %}
     {{ form.password(id="inputPassword", class="form-control ml-3") }}
-
-    {{ form.submit(class="btn btn-info ml-3 mt-2") }}
+    {{ form.submit(class="btn btn-info ml-3 mt-3") }}
 </form>
 
+<p class="text-muted m-3">Please type in your password to apply changes to your username and email</p>
 <a class="d-block mt-2 ml-3 small" href="{{url_for('reset_request')}}">Forgot Password?</a>
 
 {% endif %}

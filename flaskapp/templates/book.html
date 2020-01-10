@@ -43,9 +43,9 @@
 {% if total == 1 %}
 <div class="row">
     <div class="card-group">
-        <div class="col-md-5">
+        <div class="col-md-7">
             <div id="flight" class="card rounded-0 p-4 m-3"
-                style="height: 25rem; border-color: {{nice_colors[0]}}; background-color: rgb(221,160,221);">
+                style="height: 25rem; border-color: {{nice_colors[0]}}; background-color: rgb(65,105,225);">
 
                 <h3><b>From {{flights[0].from_location}}</b></h3>
                 <h3><b>To {{flights[0].to_location}}</b></h3>
@@ -61,9 +61,9 @@
 <div class="row">
     <div class="card-group">
         {% for flight in flights %}
-        <div class="col-4">
+        <div class="col-sm-12 col-md-6  col-lg-4">
             <div id="flight" class="card rounded-0 p-4 m-3"
-                style="height: 25rem; border-color: {{nice_colors[loop.index % nice_colors|length]}}; background-color: rgb(221,160,221);">
+                style="height: 28rem; border-color: {{nice_colors[loop.index % nice_colors|length]}}; background-color: rgb(65,105,225);">
 
                 <h3><b>From {{flight.from_location}}</b></h3>
                 <h3><b>To {{flight.to_location}}</b></h3>
