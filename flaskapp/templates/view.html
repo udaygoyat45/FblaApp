@@ -5,7 +5,6 @@
 <div class="container-fluid p-4 m-4">
     <h1 style="Helvetica, sans-serif">You have not booked any flights yet...</h1>
     <div class="">
-        
         <br><br>
         <h2>Please go under Flights tab and click on Book a Flight to a book a flight!</h2>
         <br>
@@ -17,12 +16,10 @@
 
 <div class="row">
     <div class="card-group justify-content-center">
-
         {% for flight in flights %}
         <div class="col-sm-12 col-md-6  col-lg-6">
             <div id="flight" class="card rounded-0 p-4 m-3"
                 style="height: 25rem; background-color: {{nice_colors[loop.index % nice_colors|length]}};">
-
                 <h3><b>From {{flights_info[loop.index-1].from_location}}</b></h3>
                 <h3><b>To {{flights_info[loop.index-1].to_location}}</b></h3>
                 <br>
@@ -33,9 +30,6 @@
             </div>
         </div>
         {% endfor %}
-
-
-
     </div>
 </div>
 {% endif %}

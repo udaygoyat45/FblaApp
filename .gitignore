@@ -1,3 +1,4 @@
 env/
 .vscode/
 flaskapp/__pycache__
+flaskapp/site.db
