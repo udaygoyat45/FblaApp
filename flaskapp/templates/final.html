@@ -11,10 +11,10 @@
   <form class="form-signin" method="POST" action="">
     {{ form.hidden_tag() }}
     <div class="form-label-group">
-      {{ form.date.label(for="inputUsername") }}
+      {{ form.date.label() }}
 
       {% if form.date.errors %}
-      {{ form.date(id="inputUsername", class="form-control is-invalid") }}
+      {{ form.date( class="form-control is-invalid") }}
       <div class="invalid-feedback">
         {% for error in form.date.errors %}
         <span>{{ error }}</span>
@@ -22,45 +22,42 @@
       </div>
 
       {% else %}
-      {{ form.date(id="inputUsername", class="form-control") }}
+      {{ form.date( class="form-control") }}
       {% endif %}
 
     </div>
 
     <div class="form-label-group">
-      {{ form.children_passengars.label(for="inputEmail") }}
+      {{ form.children_passengars.label() }}
 
       {% if form.children_passengars.errors %}
-      {{ form.children_passengars(id="inputEmail", class="form-control is-invalid") }}
+      {{ form.children_passengars( class="form-control is-invalid") }}
       <div class="invalid-feedback">
         {% for error in form.children_passengars.errors %}
         <span>{{ error }}</span>
         {% endfor %}
       </div>
       {% else %}
-      {{ form.children_passengars(id="inputEmail", class="form-control") }}
+      {{ form.children_passengars( class="form-control") }}
       {% endif %}
     </div>
 
 
     <div class="form-label-group">
-      {{ form.adult_passengars.label(for="inputPassword") }}
+      {{ form.adult_passengars.label() }}
 
       {% if form.adult_passengars.errors %}
-      {{ form.adult_passengars(id="inputPassword", class="form-control is-invalid") }}
+      {{ form.adult_passengars( class="form-control is-invalid") }}
       <div class="invalid-feedback">
         {% for error in form.adult_passengars.errors %}
         <span>{{ error }}</span>
         {% endfor %}
       </div>
       {% else %}
-      {{ form.adult_passengars(id="inputPassword", class="form-control") }}
+      {{ form.adult_passengars( class="form-control") }}
       {% endif %}
-
     </div>
-
     {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase mt-3") }}
-
   </form>
 
   <p class="text-muted mt-5">*** The paying process was not included for this website demonstration. ***</p>

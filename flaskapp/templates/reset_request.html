@@ -1,22 +1,22 @@
 {% extends "layout.html" %}
 {% block a %}
 <form class="form-signin mt-4" method="POST" action="">
-    {{ form.hidden_tag() }}
-    <div class="form-label-group">
-        {{ form.email.label(for="inputUsername") }}
+  {{ form.hidden_tag() }}
+  <div class="form-label-group">
+    {{ form.email.label() }}
 
-        {% if form.email.errors %}
-        {{ form.email(id="inputUsername", class="form-control is-invalid mb-3") }}
-        <div class="invalid-feedback">
-            {% for error in form.email.errors %}
-            <span>{{ error }}</span>
-            {% endfor %}
-        </div>
-
-        {% else %}
-        {{ form.email(id="inputUsername", class="form-control mb-3") }}
-        {% endif %}
+    {% if form.email.errors %}
+    {{ form.email( class="form-control is-invalid mb-3") }}
+    <div class="invalid-feedback">
+      {% for error in form.email.errors %}
+      <span>{{ error }}</span>
+      {% endfor %}
     </div>
-    {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase") }}
+
+    {% else %}
+    {{ form.email( class="form-control mb-3") }}
+    {% endif %}
+  </div>
+  {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase") }}
 </form>
 {% endblock a %}
