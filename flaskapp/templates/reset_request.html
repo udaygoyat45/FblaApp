@@ -1,43 +1,5 @@
 {% extends "layout.html" %}
 {% block a %}
-<!---
-<div class="container">
-  <div class="row">
-    <div class="col-lg-10 col-xl-9 mx-auto">
-      <div class="card card-signin flex-row my-5">
-        <div class="card-img-left d-none d-md-flex">
-        </div>
-        <div class="card-body">
-          <h5 class="card-title text-center">Reset Password</h5>
-          <form class="form-signin" method="POST" action="">
-            {{ form.hidden_tag() }}
-
-            <div class="form-label-group">
-              {{ form.email.label(for="inputUsername") }}
-
-              {% if form.email.errors %}
-              {{ form.email(id="inputemail", class="form-control is-invalid") }}
-              <div class="invalid-feedback">
-                {% for error in form.email.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-              </div>
-              {% else %}
-              {{ form.email(id="inputemail", class="form-control") }}
-              {% endif %}
-
-            </div>
-
-            {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase") }}
-          </form>
-
-          <hr class="my-4">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
--->
 <form class="form-signin mt-4" method="POST" action="">
     {{ form.hidden_tag() }}
     <div class="form-label-group">
@@ -54,9 +16,7 @@
         {% else %}
         {{ form.email(id="inputUsername", class="form-control mb-3") }}
         {% endif %}
-
     </div>
-
     {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase") }}
 </form>
 {% endblock a %}

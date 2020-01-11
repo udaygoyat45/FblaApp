@@ -1,52 +1,52 @@
 {% extends "layout.html" %}
 {% block a %}
 
-    <form class="form-signin mt-4" method="POST" action="">
-        {{ form.hidden_tag() }}
-        <div class="form-label-group">
-            {{ form.username.label(for="inputUsername") }}
+<form class="form-signin mt-4" method="POST" action="">
+    {{ form.hidden_tag() }}
+    <div class="form-label-group">
+        {{ form.username.label(for="inputUsername") }}
 
-            {% if form.username.errors %}
-            {{ form.username(id="inputUsername", class="form-control is-invalid mb-3") }}
-            <div class="invalid-feedback">
-                {% for error in form.username.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-            </div>
-
-            {% else %}
-            {{ form.username(id="inputUsername", class="form-control mb-3") }}
-            {% endif %}
-
+        {% if form.username.errors %}
+        {{ form.username(id="inputUsername", class="form-control is-invalid mb-3") }}
+        <div class="invalid-feedback">
+            {% for error in form.username.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
         </div>
 
-        <div class="form-label-group">
-            {{ form.password.label(for="inputPassword") }}
+        {% else %}
+        {{ form.username(id="inputUsername", class="form-control mb-3") }}
+        {% endif %}
 
-            {% if form.password.errors %}
-            {{ form.password(id="inputPassword", class="form-control is-invalid mb-3") }}
-            <div class="invalid-feedback">
-                {% for error in form.password.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-            </div>
-            {% else %}
-            {{ form.password(id="inputPassword", class="form-control mb-3") }}
-            {% endif %}
+    </div>
 
+    <div class="form-label-group">
+        {{ form.password.label(for="inputPassword") }}
+
+        {% if form.password.errors %}
+        {{ form.password(id="inputPassword", class="form-control is-invalid mb-3") }}
+        <div class="invalid-feedback">
+            {% for error in form.password.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
         </div>
-        <div class="form-check">
-            {{ form.remember(class="custom-control-input mb-3") }}
-            {{ form.remember.label(class="custom-control-label ml-3 mb-4") }}
-        </div>
+        {% else %}
+        {{ form.password(id="inputPassword", class="form-control mb-3") }}
+        {% endif %}
 
-        {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase") }}
+    </div>
+    <div class="form-check">
+        {{ form.remember(class="custom-control-input mb-3") }}
+        {{ form.remember.label(class="custom-control-label ml-3 mb-4") }}
+    </div>
 
-        <div class="links">
-            <a href="{{ url_for('register') }}" >Sign Up</a>
-            <br>
-            <a href="{{ url_for('reset_request') }}">Forgot Password</a>
-        </div>
-        
-    </form>
+    {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase") }}
+
+    <div class="links">
+        <a href="{{ url_for('register') }}">Sign Up</a>
+        <br>
+        <a href="{{ url_for('reset_request') }}">Forgot Password</a>
+    </div>
+
+</form>
 {% endblock a %}
