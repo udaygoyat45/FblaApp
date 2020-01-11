@@ -8,7 +8,7 @@
             {{ form.from_location.label() }}
 
             {% if form.from_location.errors %}
-            {{ form.date(id="inputUsername", class="form-control is-invalid") }}
+            {{ form.date( class="form-control is-invalid") }}
             <div class="invalid-feedback">
                 {% for error in form.from_location.errors %}
                 <span>{{ error }}</span>
@@ -25,14 +25,14 @@
             {{ form.to_location.label() }}
 
             {% if form.to_location.errors %}
-            {{ form.to_location(id="inputEmail", class="form-control is-invalid") }}
+            {{ form.to_location( class="form-control is-invalid") }}
             <div class="invalid-feedback">
                 {% for error in form.to_location.errors %}
                 <span>{{ error }}</span>
                 {% endfor %}
             </div>
             {% else %}
-            {{ form.to_location(id="inputEmail", class="form-control") }}
+            {{ form.to_location( class="form-control") }}
             {% endif %}
         </div>
         {{ form.submit(class="btn btn-lg btn-primary btn-block mt-3") }}

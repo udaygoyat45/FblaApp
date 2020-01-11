@@ -5,7 +5,6 @@ from flaskapp import db, bcrypt, app, mail
 from flaskapp.forms import LoginForm, RegistrationForm, AccountForm, RequestResetForm, ResetPasswordForm, RedeemPoints, FlightOptions, EditFlightOptions, SearchFlights
 import datetime
 from flask_login import login_user, current_user, logout_user, login_required
-from flaskapp.imagegen import generate_url
 from ast import literal_eval
 from flask_mail import Message
 from flaskapp.generate import generate_id
@@ -24,6 +23,7 @@ def home():
 def frequent():
     return render_template("frequent.html", title="Frequent Flyer Program")
 
+
 def set_up_choices():
     airports = set()
     for flight in Flight.query.all():
@@ -33,8 +33,9 @@ def set_up_choices():
     final.append(("", "All Flights"))
     for airport in airports:
         final.append((airport, airport))
-    
+
     return final
+
 
 @app.route("/book", methods=["GET", 'POST'])
 @login_required
@@ -44,7 +45,7 @@ def book():
     form.to_location.choices = set_up_choices()
 
     flights = None
-        
+
     if form.validate_on_submit():
         from_location_id = form.from_location.data
         to_location_id = form.to_location.data
@@ -54,13 +55,15 @@ def book():
         elif (from_location_id == ""):
             flights = Flight.query.filter_by(to_location=to_location_id).all()
         elif (to_location_id == ""):
-            flights = Flight.query.filter_by(from_location=from_location_id).all()
+            flights = Flight.query.filter_by(
+                from_location=from_location_id).all()
         else:
-            flights = Flight.query.filter_by(from_location=from_location_id, to_location=to_location_id).all()
+            flights = Flight.query.filter_by(
+                from_location=from_location_id, to_location=to_location_id).all()
 
         total = len(flights)
         return render_template("book.html", title="Book A Flight", form=form, flights=flights, nice_colors=nice_colors, total=total)
-        
+
     flights = Flight.query.all()
     return render_template("book.html", title="Book A Flight", flights=flights, form=form, nice_colors=nice_colors)
 

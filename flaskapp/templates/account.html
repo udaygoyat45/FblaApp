@@ -4,10 +4,10 @@
 <form class="" method="POST" action="">
     {{ form.hidden_tag() }}
 
-    {{ form.username.label(id="inputUsername", class="ml-3 mt-3") }}
+    {{ form.username.label( class="ml-3 mt-3") }}
 
     {% if form.username.errors %}
-    {{ form.username(id="inputUsername", class="form-control is-invalid") }}
+    {{ form.username( class="form-control is-invalid") }}
     <div class="invalid-feedback">
         {% for error in form.username.errors %}
         <span>{{ error }}</span>
@@ -15,33 +15,33 @@
     </div>
 
     {% else %}
-    {{ form.username(id="inputUsername", class="form-control ml-3", value=user.username) }}
+    {{ form.username( class="form-control ml-3", value=user.username) }}
     {% endif %}
 
-    {{ form.email.label(for="inputEmail", class="ml-3 mt-3") }}
+    {{ form.email.label(, class="ml-3 mt-3") }}
 
     {% if form.email.errors %}
-    {{ form.email(id="inputUsername", class="form-control is-invalid ml-3") }}
+    {{ form.email( class="form-control is-invalid ml-3") }}
     <div class="invalid-feedback">
         {% for error in form.email.errors %}
         <span>{{ error }}</span>
         {% endfor %}
     </div>
     {% else %}
-    {{ form.email(id="inputUsername", class="form-control ml-3", value=user.email) }}
+    {{ form.email( class="form-control ml-3", value=user.email) }}
     {% endif %}
 
-    {{ form.password.label(for="inputPassword", class="ml-3 mt-3") }}
+    {{ form.password.label(, class="ml-3 mt-3") }}
 
     {% if form.password.errors %}
-    {{ form.password(id="inputPassword", class="form-control is-invalid ml-3") }}
+    {{ form.password( class="form-control is-invalid ml-3") }}
     <div class="invalid-feedback">
         {% for error in form.password.errors %}
         <span>{{ error }}</span>
         {% endfor %}
     </div>
     {% else %}
-    {{ form.password(id="inputPassword", class="form-control ml-3") }}
+    {{ form.password( class="form-control ml-3") }}
     {{ form.submit(class="btn btn-info ml-3 mt-3") }}
 </form>
 

@@ -4,10 +4,10 @@
 <form class="form-signin mt-4" method="POST" action="">
     {{ form.hidden_tag() }}
     <div class="form-label-group">
-        {{ form.username.label(for="inputUsername") }}
+        {{ form.username.label() }}
 
         {% if form.username.errors %}
-        {{ form.username(id="inputUsername", class="form-control is-invalid mb-3") }}
+        {{ form.username( class="form-control is-invalid mb-3") }}
         <div class="invalid-feedback">
             {% for error in form.username.errors %}
             <span>{{ error }}</span>
@@ -15,23 +15,23 @@
         </div>
 
         {% else %}
-        {{ form.username(id="inputUsername", class="form-control mb-3") }}
+        {{ form.username( class="form-control mb-3") }}
         {% endif %}
 
     </div>
 
     <div class="form-label-group">
-        {{ form.password.label(for="inputPassword") }}
+        {{ form.password.label() }}
 
         {% if form.password.errors %}
-        {{ form.password(id="inputPassword", class="form-control is-invalid mb-3") }}
+        {{ form.password( class="form-control is-invalid mb-3") }}
         <div class="invalid-feedback">
             {% for error in form.password.errors %}
             <span>{{ error }}</span>
             {% endfor %}
         </div>
         {% else %}
-        {{ form.password(id="inputPassword", class="form-control mb-3") }}
+        {{ form.password( class="form-control mb-3") }}
         {% endif %}
 
     </div>

@@ -3,6 +3,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from datetime import datetime
 from flask_login import UserMixin
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -32,6 +33,7 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.password}')"
 
+
 class UserFlight (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     flight_id = db.Column(db.Integer, nullable=False)
@@ -43,27 +45,14 @@ class UserFlight (db.Model):
     def __repr__(self):
         return f"Flight('{self.flight_id}', '{self.user_id}', '{self.date}', '{self.children}', '{self.adults}')"
 
+
 class Flight(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     from_location = db.Column(db.String(20), unique=False, nullable=False)
     to_location = db.Column(db.String(20), unique=False, nullable=False)
     date = db.Column(db.DateTime, unique=False, nullable=False)
-    
+
     price = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return f"Flight('{self.from_location}', '{self.to_location}', '{self.date}')"
-
-#not needed anymore
-'''
-class Word(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    word = db.Column(db.String(45), unique=True, nullable=False)
-    time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    due_date = db.Column(db.DateTime, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    level = db.Column(db.Integer, nullable=False)
-
-    def __repr__(self):
-        return f"Word('{self.word}', '{self.time}', '{self.due_date}', '{self.user_id}', '{self.level}')"
-'''

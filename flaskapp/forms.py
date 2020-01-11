@@ -81,6 +81,7 @@ class FlightOptions(FlaskForm):
     flight_id = 0
     submit = SubmitField("Book My Flight")
 
+
 class EditFlightOptions(FlaskForm):
     date = SelectField("Date")
     children_passengars = SelectField(
@@ -90,6 +91,7 @@ class EditFlightOptions(FlaskForm):
     flight_id = 0
     destroy = SubmitField("Erase this Booking")
     submit = SubmitField("Edit My Flight")
+
 
 class SearchFlights(FlaskForm):
     from_location = SelectField("From Location")
