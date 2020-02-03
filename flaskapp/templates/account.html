@@ -18,7 +18,7 @@
     {{ form.username( class="form-control ml-3", value=user.username) }}
     {% endif %}
 
-    {{ form.email.label(, class="ml-3 mt-3") }}
+    {{ form.email.label(class="ml-3 mt-3") }}
 
     {% if form.email.errors %}
     {{ form.email( class="form-control is-invalid ml-3") }}
@@ -31,7 +31,7 @@
     {{ form.email( class="form-control ml-3", value=user.email) }}
     {% endif %}
 
-    {{ form.password.label(, class="ml-3 mt-3") }}
+    {{ form.password.label(class="ml-3 mt-3") }}
 
     {% if form.password.errors %}
     {{ form.password( class="form-control is-invalid ml-3") }}
