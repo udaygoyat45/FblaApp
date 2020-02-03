@@ -1,4 +1,5 @@
-env/
 .vscode/
+env/
+__pycache__
 flaskapp/__pycache__
 flaskapp/site.db

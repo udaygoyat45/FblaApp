@@ -2,12 +2,11 @@
 from flask import request, redirect, render_template, url_for, flash, jsonify
 from flaskapp.models import User, Flight, UserFlight
 from flaskapp import db, bcrypt, app, mail
-from flaskapp.forms import LoginForm, RegistrationForm, AccountForm, RequestResetForm, ResetPasswordForm, RedeemPoints, FlightOptions, EditFlightOptions, SearchFlights
+from flaskapp.forms import LoginForm, RegistrationForm, AccountForm, RequestResetForm, ResetPasswordForm, FlightOptions, EditFlightOptions, SearchFlights
 import datetime
 from flask_login import login_user, current_user, logout_user, login_required
 from ast import literal_eval
-from flask_mail import Message
-from flaskapp.generate import generate_id
+from flaskapp.generate import generate_id, generate_message
 
 nice_colors = ["rgb(241,67,87)", "rgb(83,162,227)", "rgb(244,173,73)",
                "rgb(103,87,226)", "rgb(105,222,146)", "rgb(241,60,31)", "rgb(68,49,141)"]
@@ -77,11 +76,6 @@ def credits():
 def job():
     return render_template("job.html", title="Jobs Available")
 
-# the one below is only for testing purposes
-@app.route("/layout")
-def layout():
-    return render_template("layout.html")
-
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -128,16 +122,7 @@ def register():
 
         flash("Your account has been created, and now you can login 👍", 'success')
 
-        msg = Message("Welcome to Gooday Airlines",
-                      recipients=[form.email.data])
-        msg.body = f'''Hello, {form.username.data}
-
-        Thank you for registering to Gooday Airlines. I hope you enjoy our service in the future.
-
-        Your Frequent Flyer ID is {new_flyer_id}. Please save this ID somwhere since you would use
-        this everytime you have redeem your points. '''
-
-        mail.send(msg)
+        generate_message(form.username.data, form.email.data, new_flyer_id, mail, app)
 
         return redirect(url_for('login'))
 
@@ -288,9 +273,3 @@ def edit():
             return redirect(url_for('view'))
 
     return render_template("edit.html", flight=flight, name="Your Booking", head=True, title="Your Booking", forms=False, form=form)
-
-# @app.route("/search")
-# @login_required
-# def search ():
-#     form = searchFlight()
-#     if form.validate_on_submit():
