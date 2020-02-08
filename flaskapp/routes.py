@@ -218,7 +218,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(
-            user.password, form.password.data.encode("utf-8")
+            user.password.encode("utf-8"), form.password.data.encode("utf-8")
         ):
             flash("Login Successful. Welcome 😄", "success")
             login_user(user, remember=form.remember.data)
