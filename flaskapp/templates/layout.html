@@ -22,7 +22,6 @@ background-attachment: fixed;">
     {% else %}
 
     <body>
-
         {% endif %}
 
 
@@ -39,9 +38,9 @@ background-attachment: fixed;">
         <!--header, this includes the jumbotron and the navbar-->
         {% if head == False %}
         <nav class="navbar navbar-expand-md navbar-light">
-
-            <img class="navbar-brand" id="brand-logo" src="../static/img/logo2.png">
-
+            <a href="{{ url_for('home') }}">
+                <img class="navbar-brand" id="brand-logo" src="../static/img/logo2.png">
+            </a>
             <div class="navbar-inner">
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -105,7 +104,9 @@ background-attachment: fixed;">
         <div id="first" class="jumbotron jumbotron-fluid text-white text-center">
             <nav class="navbar navbar-expand-md navbar-dark bg-transparent">
 
-                <img class="navbar-brand" id="brand-logo" src="../static/img/logo.png">
+                <a href="{{ url_for('home') }}">
+                    <img class="navbar-brand" id="brand-logo" src="../static/img/logo.png">
+                </a>
 
                 <div class="navbar-inner">
 
@@ -197,9 +198,6 @@ background-attachment: fixed;">
                                 </div>
                                 <div class="card-body">
 
-
-
-
                                     {% endif %}
 
                                     {% block a %}
@@ -220,8 +218,9 @@ background-attachment: fixed;">
 
         <!--footer for the website-->
         <nav id="footer" class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <img class="navbar-brand" id="brand-logo" src="../static/img/logo.png">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            <a href="{{ url_for('home') }}">
+                <img class="navbar-brand" id="brand-logo" src="../static/img/logo.png">
+            </a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
