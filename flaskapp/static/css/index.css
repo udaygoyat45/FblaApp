@@ -95,3 +95,24 @@ html,body
     bottom: 0;
     width: 100%;
   }
+
+.bebas {
+    font-family: 'Bebas Neue', cursive;
+}
+
+.b612 {
+    font-family: 'B612', sans-serif;
+}
+
+.montserrat {
+    font-family: 'Montserrat', 
+}
+
+.overpass {
+    font-family: 'Overpass', sans-serif;
+    font-size: 500%;
+}
+
+.source-sans {
+    font-family: 'Source Sans Pro', sans-serif;
+}
