@@ -1,6 +1,6 @@
 from flaskapp import db, bcrypt, mail
 from flaskapp.models import Flight, User
-from flaskapp.generate import generate_id, generate_message
+from flaskapp.generate import generate_id
 import datetime
 import random
 
@@ -11,8 +11,6 @@ new_flyer_id = generate_id(10)
 user = User(username="UdayGoyat",
             email="udaygoyat45@gmail.com", password=bcrypt.generate_password_hash(
                 "udaygoyat#4".encode('utf-8')), flyer_id=new_flyer_id)
-
-# generate_message("UdayGoyat", "udaygoyat45@gmail.com", new_flyer_id, mail, app)
 
 db.session.add(user)
 db.session.commit()
