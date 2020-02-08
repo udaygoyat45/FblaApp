@@ -1,5 +1,5 @@
 from flask import request, redirect, render_template, url_for, flash
-from flaskapp.models import User, Flight, UserFlight
+from flaskapp.models import User, Flight, UserFlight, Message
 from flaskapp import db, bcrypt, app, mail
 from flaskapp.forms import (
     LoginForm,
@@ -10,6 +10,7 @@ from flaskapp.forms import (
     FlightOptions,
     EditFlightOptions,
     SearchFlights,
+    MessageForm,
 )
 import datetime
 from flask_login import login_user, current_user, logout_user, login_required
@@ -34,9 +35,17 @@ def home():
     )
 
 
-@app.route("/frequent")
+@app.route("/frequent", methods=['GET', 'POST'])
 def frequent():
-    return render_template("frequent.html", title="Frequent Flyer Program")
+    form = MessageForm()
+    if form.validate_on_submit():
+        message = Message(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
+        db.session.add(message)
+        db.session.commit()
+
+        flash("Your message was succesfully delivered", 'success')
+    
+    return render_template("frequent.html", title="Frequent Flyer Program", form=form)
 
 
 def set_up_choices():
@@ -96,9 +105,17 @@ def book():
     )
 
 
-@app.route("/credits")
+@app.route("/credits", methods=['GET', 'POST'])
 def credits():
-    return render_template("credits.html", title="Credits")
+    form = MessageForm();
+    if form.validate_on_submit():
+        message = Message(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
+        db.session.add(message)
+        db.session.commit()
+
+        flash("Your message was succesfully delivered", 'success')
+        
+    return render_template("credits.html", title="Credits", form=form)
 
 
 @app.route("/job")

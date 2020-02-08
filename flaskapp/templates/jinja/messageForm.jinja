@@ -1,0 +1,51 @@
+<form class="form-signin m-3" method="POST" action="">
+        <div class="card" style="width: 30rem;">
+            <h5 class="card-header">Contact Us</h5>
+            <div class="card-body">
+                {{ form.hidden_tag() }}
+    
+                {{form.name.label()}}
+                {% if form.name.errors %}
+                    {{ form.name(class="form-control is-invalid mb-3")}}
+                    {% for error in form.name.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% else %}
+                    {{ form.name( class="form-control mb-3") }}
+                {% endif %}
+            
+            
+                {{form.email.label()}}
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control is-invalid mb-3")}}
+                    {% for error in form.email.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% else %}
+                    {{ form.email( class="form-control mb-3") }}
+                {% endif %}
+            
+                {{form.phone.label()}}
+                {% if form.phone.errors %}
+                    {{ form.phone(class="form-control is-invalid mb-3")}}
+                    {% for error in form.phone.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% else %}
+                    {{ form.phone( class="form-control mb-3") }}
+                {% endif %}
+            
+                {{form.message.label()}}
+                {% if form.message.errors %}
+                    {{ form.message(class="form-control is-invalid mb-3")}}
+                    {% for error in form.message.errors %}
+                        {{ error }}
+                    {% endfor %}
+                {% else %}
+                    {{ form.message( class="form-control mb-3") }}
+                {% endif %}
+            
+                {{ form.submit(class="btn btn-lg btn-primary") }}
+                </div>
+                </div>
+            </form>
