@@ -17,6 +17,11 @@ $(document).ready(function () {
     console.log("js is done");
 });
 
+$("#footer-collapse").click(function() {
+    console.log("clicked!");
+    $('html, body').animate({scrollTop: $(document).height()}, 'slow');
+})
+
 $("#second a").click(function () {
     console.log("clicked!");
     document.querySelector('.carousel').scrollIntoView({ 
