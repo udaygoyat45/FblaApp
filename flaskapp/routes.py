@@ -93,15 +93,18 @@ def book():
             flights=flights,
             nice_colors=nice_colors,
             total=total,
+            image="../static/img/gradient.jpg"
         )
 
     flights = Flight.query.all()
     return render_template(
         "book.html",
-        title="Book A Flight",
+        title="Book a Flight",
+        head=False,
         flights=flights,
         form=form,
         nice_colors=nice_colors,
+        image="../static/img/gradient.jpg"
     )
 
 
@@ -115,10 +118,11 @@ def credits():
 
         flash("Your message was succesfully delivered", 'success')
         
+        
     return render_template("credits.html", title="Credits", form=form)
 
 
-@app.route("/job")
+@app.route("/job", methods=['GET', 'POST'])
 def job():
     form = MessageForm();
     if form.validate_on_submit():
