@@ -93,18 +93,17 @@ def book():
             flights=flights,
             nice_colors=nice_colors,
             total=total,
-            image="../static/img/gradient.jpg"
+            image="../static/img/sky.jpg"
         )
 
     flights = Flight.query.all()
     return render_template(
         "book.html",
-        title="Book a Flight",
-        head=False,
+        title="Book A Flight",
         flights=flights,
         form=form,
         nice_colors=nice_colors,
-        image="../static/img/gradient.jpg"
+        image="../static/img/sky.jpg"
     )
 
 
@@ -218,7 +217,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(
-            user.password.encode("utf-8"), form.password.data.encode("utf-8")
+            user.password, form.password.data.encode("utf-8")
         ):
             flash("Login Successful. Welcome 😄", "success")
             login_user(user, remember=form.remember.data)
