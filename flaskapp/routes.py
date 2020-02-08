@@ -120,7 +120,15 @@ def credits():
 
 @app.route("/job")
 def job():
-    return render_template("job.html", title="Jobs Available")
+    form = MessageForm();
+    if form.validate_on_submit():
+        message = Message(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
+        db.session.add(message)
+        db.session.commit()
+
+        flash("Your message was succesfully delivered", 'success')
+        
+    return render_template("job.html", title="Jobs Available", form=form)
 
 
 @app.route("/account", methods=["GET", "POST"])
