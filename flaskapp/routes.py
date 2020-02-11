@@ -29,7 +29,7 @@ from flaskapp.generate import (
 def home():
     return render_template(
         "home.html",
-        title="Welcome to Gooday Airlines!",
+        title="Welcome to Gooday Airlines",
         subtitle="Flights that make you dream",
         animation=True,
     )
@@ -216,7 +216,6 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        print(user.password)
         if user and bcrypt.check_password_hash(
             user.password.decode('utf-8'), form.password.data
         ):
@@ -276,7 +275,6 @@ def final():
 
         return redirect(url_for("home"))
 
-    print(form.date.choices)
     return render_template(
         "final.html",
         flight=flight,
