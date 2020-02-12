@@ -116,3 +116,9 @@ html,body
 .source-sans {
     font-family: 'Source Sans Pro', sans-serif;
 }
+
+.fit-img {
+    width: 100%;
+    margin: 10px;
+    height: auto;
+}

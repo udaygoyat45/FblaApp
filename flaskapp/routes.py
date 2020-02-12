@@ -407,3 +407,15 @@ def edit():
         forms=False,
         form=form,
     )
+
+@app.route("/about", methods=['GET', 'POST'])
+def about():
+    form = MessageForm()
+    if form.validate_on_submit():
+        message = Message(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
+        db.session.add(message)
+        db.session.commit()
+
+        flash("Your message was succesfully delivered", 'success')
+
+    return render_template("about.html", form=form, title="About Gooday")
