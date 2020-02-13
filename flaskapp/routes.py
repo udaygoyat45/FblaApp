@@ -43,7 +43,7 @@ def frequent():
         db.session.add(message)
         db.session.commit()
 
-        flash("Your message was succesfully delivered", 'success')
+        flash("Your message was successfully delivered", 'success')
     
     return render_template("frequent.html", title="Frequent Flyer Program", form=form)
 
@@ -115,7 +115,7 @@ def credits():
         db.session.add(message)
         db.session.commit()
 
-        flash("Your message was succesfully delivered", 'success')
+        flash("Your message was successfully delivered", 'success')
         
         
     return render_template("credits.html", title="Credits", form=form)
@@ -129,7 +129,7 @@ def job():
         db.session.add(message)
         db.session.commit()
 
-        flash("Your message was succesfully delivered", 'success')
+        flash("Your message was successfully delivered", 'success')
         
     return render_template("job.html", title="Jobs Available", form=form)
 
@@ -416,6 +416,6 @@ def about():
         db.session.add(message)
         db.session.commit()
 
-        flash("Your message was succesfully delivered", 'success')
+        flash("Your message was successfully delivered", 'success')
 
     return render_template("about.html", form=form, title="About Gooday")
