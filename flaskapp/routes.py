@@ -14,6 +14,8 @@ from flaskapp.forms import (
 )
 import datetime
 from flask_login import login_user, current_user, logout_user, login_required
+import os
+from flask import send_from_directory
 
 # from ast import literal_eval
 from flaskapp.generate import (
@@ -35,15 +37,33 @@ def set_up_choices():
 
     return final
 
+@app.route("/favicon.ico")
+def favicon():
+    print(app.root_path)
+    return send_from_directory(os.path.join(app.root_path, 'static/img'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 @app.route("/")
-@app.route("/home")
+@app.route("/home", methods=['GET', 'POST'])
 def home():
     form = SearchFlights()
     form.from_location.choices = set_up_choices()
     form.to_location.choices = set_up_choices()
 
-    return render_template("home.html", form=form, head=True, title="Gooday Airlines", animation=True, subtitle="Flights that make you dream.")
+    if form.validate_on_submit():
+        from_location = form.from_location.data
+        to_location = form.to_location.data
+        ffp = form.frequent.data
+        refundable = form.refundable.data
+
+        flight = Flight.query.filter_by(from_location=from_location, to_location=to_location).first()
+        if flight == None:
+            flash("A flight between these two airports doesn't exist currently. We are very sorry for any inconvenience.", "danger")
+        else:
+            print(type(flight.id))
+            return redirect(url_for("final", id=flight.id))
+
+    return render_template("home.html", form=form, extra=True, head=True, title="Gooday Airlines", animation=True, subtitle="Flights that make you dream.")
 
 
 @app.route("/frequent", methods=['GET', 'POST'])

@@ -1,11 +1,11 @@
 <div class="container mx-auto pt-0">
-        <div class="display-3 pt-0 mb-4">Book A Flight</div>
+        <div class="display-4 pt-0 mb-4">Book A Flight</div>
         <form class="form-signin" method="POST" action="">
             <div class="form-row">
                 <div class="col">
                     {{ form.hidden_tag() }}
                     <div class="form-label-group">
-                        {{ form.from_location.label(class="lead", style="font-size: 150%") }}
+                        {{ form.from_location.label(class="lead", style="font-size: 120%") }}
             
                         {% if form.from_location.errors %}
                         {{ form.date( class="form-control is-invalid") }}
@@ -24,7 +24,7 @@
               
                 <div class="col">
                     <div class="form-label-group">
-                        {{ form.to_location.label(class="lead", style="font-size: 150%") }}
+                        {{ form.to_location.label(class="lead", style="font-size: 120%") }}
             
                         {% if form.to_location.errors %}
                         {{ form.to_location( class="form-control is-invalid") }}
