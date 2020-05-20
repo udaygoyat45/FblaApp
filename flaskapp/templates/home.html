@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
 {% block a %}
+
+<!--Book flight-->
+<div id="third" class="jumbotron jumbotron-fluid">
+    {% include "jinja/bookFlightForm.jinja" %}
+</div>
+
 <!--Another jumbotron, giving basic information-->
 <div id="second" class="jumbotron jumbotron-fluid">
     <div class="container">
@@ -9,7 +15,7 @@
             This is the first ever non-profit airline in the world!
             All our flights are very affordable and all the profit
             is donated to the poor in the South during the hurricane season. 
-            We provide premium service for you and your country. 
+            We provide premium service for you and your country.
         </p>
            
         <div class="text-center">
@@ -19,7 +25,7 @@
 </div>
 
 <!--carousel, this includes the basic information about the flight-->
-<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+<div class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
@@ -63,5 +69,35 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+
+<!--
+    more information about the company, a card deck
+-->
+
+
+<div class="container mt-5 mb-5">
+    <div class="text-center">
+        <div class="display-4 m-4">Here to provide you with the <b>best</b> experience.</div>
+    </div>
+    <div class="card-deck">
+        <div class="card">
+          <img src="../static/img/info.jpg" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">Can I change/cancel my booking?</h5>
+            <p class="card-text">You absolutely can. We are here to provide you with the best experience. You will also be refunded all the money if the cancellation is a week before.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="../static/img/extra-info2.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">How do I change my flight?</h5>
+            <p class="card-text">Your bookings can be edited by first clicking on flights, and then view your flights. You can also just click <a href="{{url_for('view')}}">here</a></p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+      </div>
+</div>
+
 
 {% endblock a %}

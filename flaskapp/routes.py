@@ -23,16 +23,27 @@ from flaskapp.generate import (
     nice_colors,
 )
 
+def set_up_choices():
+    airports = set()
+    for flight in Flight.query.all():
+        airports.add(flight.from_location)
+
+    final = []
+    final.append(("", "All Flights"))
+    for airport in airports:
+        final.append((airport, airport))
+
+    return final
+
 
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template(
-        "home.html",
-        title="Welcome to Gooday Airlines",
-        subtitle="Flights that make you dream",
-        animation=True,
-    )
+    form = SearchFlights()
+    form.from_location.choices = set_up_choices()
+    form.to_location.choices = set_up_choices()
+
+    return render_template("home.html", form=form, head=True, title="Gooday Airlines", animation=True, subtitle="Flights that make you dream.")
 
 
 @app.route("/frequent", methods=['GET', 'POST'])
@@ -46,19 +57,6 @@ def frequent():
         flash("Your message was successfully delivered", 'success')
     
     return render_template("frequent.html", title="Frequent Flyer Program", form=form)
-
-
-def set_up_choices():
-    airports = set()
-    for flight in Flight.query.all():
-        airports.add(flight.from_location)
-
-    final = []
-    final.append(("", "All Flights"))
-    for airport in airports:
-        final.append((airport, airport))
-
-    return final
 
 
 @app.route("/book", methods=["GET", "POST"])
@@ -92,8 +90,7 @@ def book():
             form=form,
             flights=flights,
             nice_colors=nice_colors,
-            total=total,
-            image="../static/img/sky.jpg"
+            total=total
         )
 
     flights = Flight.query.all()
@@ -102,8 +99,7 @@ def book():
         title="Book A Flight",
         flights=flights,
         form=form,
-        nice_colors=nice_colors,
-        image="../static/img/sky.jpg"
+        nice_colors=nice_colors
     )
 
 

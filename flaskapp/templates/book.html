@@ -1,46 +1,12 @@
 {% extends "layout.html" %}
 {% block a %}
 
-<div class="container m-4 mx-auto">
-    <form class="form-signin" method="POST" action="">
-        {{ form.hidden_tag() }}
-        <div class="form-label-group">
-            {{ form.from_location.label() }}
-
-            {% if form.from_location.errors %}
-            {{ form.date( class="form-control is-invalid") }}
-            <div class="invalid-feedback">
-                {% for error in form.from_location.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-            </div>
-
-            {% else %}
-            {{ form.from_location(class="form-control") }}
-            {% endif %}
-
-        </div>
-
-        <div class="form-label-group">
-            {{ form.to_location.label() }}
-
-            {% if form.to_location.errors %}
-            {{ form.to_location( class="form-control is-invalid") }}
-            <div class="invalid-feedback">
-                {% for error in form.to_location.errors %}
-                <span>{{ error }}</span>
-                {% endfor %}
-            </div>
-            {% else %}
-            {{ form.to_location( class="form-control") }}
-            {% endif %}
-        </div>
-        {{ form.submit(class="btn btn-lg btn-primary btn-block mt-3") }}
-    </form>
+<div id="third" class="jumbotron jumbotron-fluid">
+    {% include "jinja/bookFlightForm.jinja" %}
 </div>
 
-
-{% if total == 1 %}
+<!--
+    {% if total == 1 %}
 <div class="row">
     <div class="card-group">
         <div class="col-md-7">
@@ -77,5 +43,7 @@
     </div>
 </div>
 {% endif %}
+-->
+
 
 {% endblock a %}
