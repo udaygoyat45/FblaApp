@@ -5,7 +5,7 @@ $(document).ready(function () {
     
     $("#title").fadeIn();
     $(".jumbotron .container .overpass").fadeIn(500, function () {
-        $(".navbar-inner").slideDown().delay();
+        $(".navbar-inner").slideDown().delay(1000);
         $("#extra-content").fadeIn().delay();
         $("#slogan").slideDown(1000, function () {
             

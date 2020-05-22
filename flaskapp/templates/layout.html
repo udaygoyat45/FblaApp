@@ -52,7 +52,7 @@
 
                 <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
                     <ul class="navbar-nav">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="{{url_for('home')}}">HOME<span
                                     class="sr-only">(current)</span></a>
                         </li>
@@ -125,7 +125,7 @@
 
                     <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
                         <ul class="navbar-nav">
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{url_for('home')}}">HOME<span
                                         class="sr-only">(current)</span></a>
                             </li>
@@ -234,7 +234,7 @@
         <!--footer for the website-->
         <nav id="footer" class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a href="{{ url_for('home') }}">
-                <img class="navbar-brand" id="brand-logo" src="../static/img/logo2.png">
+                <img class="navbar-brand" width="75" id="brand-logo" src="../static/img/logo2.png">
             </a> <button class="navbar-toggler" id="footer-collapse" type="button" data-toggle="collapse"
                 data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -275,6 +275,9 @@
         {% if animation %}
         <script src="../static/js/index.js"></script>
         {% endif %}
+
+        <!--For the contact form-->
+        <script src="../static/js/frequent.js"></script>
 
     </body>
 

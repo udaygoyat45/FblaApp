@@ -23,6 +23,7 @@ from flaskapp.generate import (
     generate_registration_message,
     generate_reset_message,
     nice_colors,
+    generate_flight_transcript
 )
 
 def set_up_choices():
@@ -31,7 +32,6 @@ def set_up_choices():
         airports.add(flight.from_location)
 
     final = []
-    final.append(("", "All Flights"))
     for airport in airports:
         final.append((airport, airport))
 
@@ -51,12 +51,14 @@ def home():
     form.to_location.choices = set_up_choices()
 
     if form.validate_on_submit():
+        print("did this just not run?")
         from_location = form.from_location.data
         to_location = form.to_location.data
         ffp = form.frequent.data
         refundable = form.refundable.data
 
         flight = Flight.query.filter_by(from_location=from_location, to_location=to_location).first()
+        
         if flight == None:
             flash("A flight between these two airports doesn't exist currently. We are very sorry for any inconvenience.", "danger")
         else:
@@ -76,7 +78,7 @@ def frequent():
 
         flash("Your message was successfully delivered", 'success')
     
-    return render_template("frequent.html", title="Frequent Flyer Program", form=form)
+    return render_template("frequent.html", title="Frequent Flyer Program", form=form, user=current_user)
 
 
 @app.route("/book", methods=["GET", "POST"])
@@ -89,29 +91,18 @@ def book():
     flights = None
 
     if form.validate_on_submit():
-        from_location_id = form.from_location.data
-        to_location_id = form.to_location.data
+        print("did this just not run?")
+        from_location = form.from_location.data
+        to_location = form.to_location.data
+        ffp = form.frequent.data
+        refundable = form.refundable.data
 
-        if from_location_id == "" and to_location_id == "":
-            flights = Flight.query.all()
-        elif from_location_id == "":
-            flights = Flight.query.filter_by(to_location=to_location_id).all()
-        elif to_location_id == "":
-            flights = Flight.query.filter_by(from_location=from_location_id).all()
+        flight = Flight.query.filter_by(from_location=from_location, to_location=to_location).first()
+        
+        if flight == None:
+            flash("A flight between these two airports doesn't exist currently. We are very sorry for any inconvenience.", "danger")
         else:
-            flights = Flight.query.filter_by(
-                from_location=from_location_id, to_location=to_location_id
-            ).all()
-
-        total = len(flights)
-        return render_template(
-            "book.html",
-            title="Book A Flight",
-            form=form,
-            flights=flights,
-            nice_colors=nice_colors,
-            total=total
-        )
+            return redirect(url_for("final", id=flight.id))
 
     flights = Flight.query.all()
     return render_template(
@@ -287,8 +278,8 @@ def final():
         db.session.add(flight)
         db.session.commit()
 
-        flash("Your flight booking was successful 👍👍.", "success")
-
+        flash("Your flight booking was successful. An email was sent to your account with details", "success")
+        generate_flight_transcript(curr, Flight.query.filter_by(id=flight_id).first(), current_user.email, mail, app)
         return redirect(url_for("home"))
 
     return render_template(
