@@ -11,6 +11,7 @@ from flaskapp.forms import (
     EditFlightOptions,
     SearchFlights,
     MessageForm,
+    NewsletterForm
 )
 import datetime
 from flask_login import login_user, current_user, logout_user, login_required
@@ -26,6 +27,7 @@ from flaskapp.generate import (
     generate_flight_transcript
 )
 
+
 def set_up_choices():
     airports = set()
     for flight in Flight.query.all():
@@ -36,6 +38,7 @@ def set_up_choices():
         final.append((airport, airport))
 
     return final
+
 
 @app.route("/favicon.ico")
 def favicon():
@@ -243,7 +246,6 @@ def login():
     )
 
 
-@login_required
 @app.route("/final", methods=["GET", "POST"])
 @login_required
 def final():

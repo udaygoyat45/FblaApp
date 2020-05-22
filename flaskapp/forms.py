@@ -105,3 +105,7 @@ class MessageForm(FlaskForm):
     message = TextAreaField("Message", validators=[Optional(), Length(max=200)])
 
     submit = SubmitField("Submit")
+
+class NewsletterForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email(), Length(max=120)])
+    submit = SubmitField("Join");
