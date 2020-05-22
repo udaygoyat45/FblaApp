@@ -45,7 +45,6 @@ def generate_flight_transcript (user_flight, flight, email, mail, app):
     Adults: {user_flight.adults}
     Minors: {user_flight.children}
     Date: {user_flight.date}
-
     """
 
     with app.open_resource("static/img/logo2.png") as fp:
