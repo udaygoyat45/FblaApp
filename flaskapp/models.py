@@ -50,8 +50,6 @@ class Flight(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     from_location = db.Column(db.String(20), unique=False, nullable=False)
     to_location = db.Column(db.String(20), unique=False, nullable=False)
-    date = db.Column(db.DateTime, unique=False, nullable=False)
-
     price = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):

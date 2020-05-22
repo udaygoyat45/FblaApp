@@ -1,16 +1,9 @@
 {% extends "layout.html" %}
 {% block a %}
-<div class="container">
-  <div class="row">
-    <div class="col-lg-10 col-xl-9 mx-auto">
-      <div class="card card-signin flex-row my-5">
-        <div class="card-img-left d-none d-md-flex">
-        </div>
-        <div class="card-body">
-          <h5 class="card-title text-center">Reset Password</h5>
-          <form class="form-signin" method="POST" action="">
-            {{ form.hidden_tag() }}
-            <div class="form-label-group">
+  <div class="pl-4 pr-4"> 
+        <form class="form-signin" method="POST" action=""> 
+          {{ form.hidden_tag() }} 
+          <div class="form-label-group mb-4">
               {{ form.password.label() }}
 
               {% if form.password.errors %}
@@ -27,7 +20,7 @@
 
             </div>
 
-            <div class="form-label-group">
+            <div class="form-label-group mb-4">
               {{ form.confirm_password.label() }}
 
               {% if form.confirm_password.errors %}
@@ -46,9 +39,5 @@
           </form>
 
           <hr class="my-4">
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 {% endblock a %}

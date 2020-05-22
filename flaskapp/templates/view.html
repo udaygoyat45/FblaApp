@@ -3,13 +3,18 @@
 
 {% if flights == [] %}
 <div class="container-fluid p-4 m-4">
-    <h1 style="Helvetica, sans-serif">You have not booked any flights yet...</h1>
-    <div class="">
-        <br><br>
-        <h2>Please go under Flights tab and click on Book a Flight to a book a flight!</h2>
-        <br>
-        <br>
-        <h2>Or you can click <a href="{{url_for('book')}}">here</a></h2>
+    <div class="row">
+        <div class="col">
+            <img width="1000" src="../static/img/no-bookings.jpg">
+        </div>
+
+        <div class="col">
+            <div class="display-2">We couldn't find any flights, yet...</div>
+            <br>
+            <p class="lead">Please go Flights and then book flight in order to book a flight. 
+                Or here you can also click <a href="{{url_for('book')}}">here</a>
+            </p>
+        </div>
     </div>
 </div>
 {% else %}

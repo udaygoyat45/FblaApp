@@ -1,0 +1,7 @@
+All the copyright rules and credit is available by clicking on the credits link on the footer
+ of the website (https://proudaygoyat.pythonanywhere.com/credits). The judges are encouraged 
+to actually create an account with a real email on the website because website is capable of 
+automated email. Please type the url as it is and do not add www in front. The website has 
+backend and storage, so the judges can actually manipulate their data on the website, such 
+as: forgot password, change username, cancel/edit bookings, etc. The judges are encouraged 
+to try all these things on the website. 

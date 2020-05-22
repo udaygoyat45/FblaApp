@@ -92,8 +92,10 @@ class EditFlightOptions(FlaskForm):
 class SearchFlights(FlaskForm):
     from_location = SelectField("From Location")
     to_location = SelectField("To Location")
+    frequent = BooleanField("Shop FFP")
+    refundable = BooleanField("Refundable Fares")
 
-    submit = SubmitField("Filter")
+    submit = SubmitField("Search")
 
 
 class MessageForm(FlaskForm):

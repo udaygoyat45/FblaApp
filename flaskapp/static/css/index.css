@@ -1,12 +1,7 @@
  .navbar {
     margin-bottom: 0px;
     margin-top: 0px;
-}
-
-#brand-logo {
-    width: 10em;
-    padding-right: 0px;
-    margin-right: 0;
+    font-size: 75%;
 }
 
 .alert {
@@ -45,6 +40,11 @@
     font-size: 50px;
 }
 
+#third {
+    background-color: #1f2227;
+    color: white;
+}
+
 #footer .fa {
     font-size: 30px;
 }
@@ -52,7 +52,7 @@
 .carousel-inner img {
     display: block;
     width: 100vw;
-    height: 100vh;
+    height: 65vh;
     object-fit: cover;
 }
 
@@ -121,4 +121,9 @@ html,body
     width: 100%;
     margin: 10px;
     height: auto;
+}
+
+.nav-link {
+    font-weight: bold;
+    font-size: 110%;
 }

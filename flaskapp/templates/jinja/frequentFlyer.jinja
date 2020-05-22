@@ -1,0 +1,10 @@
+{% if user.is_authenticated %}
+<div class="container mt-5">
+    <h1 class="bebas">Your points: {{user.points}}</h1>
+</div>
+{% else %}
+<div class="container mt-5">
+    <p class="b612"><a href="{{url_for('login')}}" >login</a> in to view your total points. </p>
+</div>
+{% endif %}
+<hr>
