@@ -1,5 +1,5 @@
 from flask import request, redirect, render_template, url_for, flash
-from flaskapp.models import User, Flight, UserFlight, Message
+from flaskapp.models import User, Flight, UserFlight, Messages
 from flaskapp import db, bcrypt, app, mail
 from flaskapp.forms import (
     LoginForm,
@@ -15,15 +15,16 @@ from flaskapp.forms import (
 import datetime
 from flask_login import login_user, current_user, logout_user, login_required
 import os
+from flask_mail import Message
 from flask import send_from_directory
 
 # from ast import literal_eval
 from flaskapp.generate import (
     generate_id,
-    generate_registration_message,
-    generate_reset_message,
+    # generate_registration_message,
+    # generate_reset_message,
     nice_colors,
-    generate_flight_transcript
+    # generate_flight_transcript
 )
 
 def set_up_choices():
@@ -72,7 +73,7 @@ def home():
 def frequent():
     form = MessageForm()
     if form.validate_on_submit():
-        message = Message(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
+        message = Messages(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
         db.session.add(message)
         db.session.commit()
 
@@ -118,7 +119,7 @@ def book():
 def credits():
     form = MessageForm();
     if form.validate_on_submit():
-        message = Message(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
+        message = Messages(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
         db.session.add(message)
         db.session.commit()
 
@@ -132,7 +133,7 @@ def credits():
 def job():
     form = MessageForm();
     if form.validate_on_submit():
-        message = Message(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
+        message = Messages(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
         db.session.add(message)
         db.session.commit()
 
@@ -199,9 +200,23 @@ def register():
 
         flash("Your account has been created, and now you can login 👍", "success")
 
-        generate_registration_message(
-            form.username.data, form.email.data, new_flyer_id, mail, app
-        )
+        # generate_registration_message(
+        #     form.username.data, form.email.data, new_flyer_id, mail, app
+        # )
+
+        #generate_registration code
+        msg = Message("Welcome to Gooday Airlines", recipients=[form.email.data])
+        msg.body = f'''Hello, {form.username.data}
+        Thank you for registering to Gooday Airlines. I hope you enjoy our service in the future.
+        Your Frequent Flyer ID is {new_flyer_id}. Please save this ID somwhere since you would use
+        this everytime you redeem your points. '''
+
+        with app.open_resource("static/img/logo2.png") as fp:
+            msg.attach("image.png", "image/png", fp.read())
+
+        mail.send(msg)
+
+        #generate_registratin code ends
 
         return redirect(url_for("login"))
 
@@ -279,7 +294,28 @@ def final():
         db.session.commit()
 
         flash("Your flight booking was successful. An email was sent to your account with details", "success")
-        generate_flight_transcript(curr, Flight.query.filter_by(id=flight_id).first(), current_user.email, mail, app)
+        # generate_flight_transcript(curr, Flight.query.filter_by(id=flight_id).first(), current_user.email, mail, app)
+
+        #generate_flight_transcript code
+        c_flight = Flight.query.filter_by(id=flight_id).first()
+        msg = Message("Your Flight Booking", recipients=[current_user.email])
+        msg.body = f"""Thank you for booking your flight with Gooday Airlines.
+        You can change/cancel your booking by clicking on this link: {url_for('view')}
+
+        From: {c_flight.from_location}
+        To: {c_flight.to_location}
+        Price: ${c_flight.price}
+        Adults: {curr.adults}
+        Minors: {curr.children}
+        Date: {curr.date}
+
+        """
+
+        with app.open_resource("static/img/logo2.png") as fp:
+            msg.attach("image.png", "image/png", fp.read())
+
+        mail.send(msg)
+        #generate_flight_transcript code ends
         return redirect(url_for("home"))
 
     return render_template(
@@ -295,7 +331,17 @@ def final():
 
 def send_reset_email(user):
     token = user.get_reset_token()
-    generate_reset_message(user.username, user.email, token, mail, app)
+    # generate_reset_message(user.username, user.email, token, mail, app)
+    msg = Message("Password Reset Request", recipients=[user.email])
+    msg.body = f"""To reset your password, click on this link:
+    {url_for('reset_token', token=token, _external=True)}
+
+    If you did not make this request, don't worry you are safe 😁"""
+
+    with app.open_resource("static/img/logo2.png") as fp:
+        msg.attach("image.png", "image/png", fp.read())
+
+    mail.send(msg)
 
 
 @app.route("/reset_request", methods=["GET", "POST"])
@@ -419,7 +465,7 @@ def edit():
 def about():
     form = MessageForm()
     if form.validate_on_submit():
-        message = Message(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
+        message = Messages(name=form.name.data, email=form.email.data, phone=form.phone.data, message=form.message.data)
         db.session.add(message)
         db.session.commit()
 

@@ -56,7 +56,7 @@ class Flight(db.Model):
     def __repr__(self):
         return f"Flight('{self.from_location}', '{self.to_location}', '{self.date}')"
 
-class Message(db.Model):
+class Messages(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=False, nullable=False)
     email = db.Column(db.String(20), unique=False, nullable=False)
