@@ -131,3 +131,7 @@ html,body
 .social {
     font-size: 50%;
 }
+
+.jumbotron {
+    border-radius: 0 !important;
+}
