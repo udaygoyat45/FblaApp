@@ -29,5 +29,6 @@ for i in range(len(airports)):
         if (i != j):
             temp = Flight(from_location=airports[i], to_location=airports[j], date=datetime.datetime.now(
             )+datetime.timedelta(days=random.randint(1, 6)), price=random.randint(300, 500))
+            print(temp.date)
             db.session.add(temp)
             db.session.commit()

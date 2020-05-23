@@ -261,6 +261,7 @@ def final():
 
     for i in range(7):
         curr += datetime.timedelta(days=7)
+        print(curr)
         form.date.choices.append(
             (curr.strftime("%m/%d/%Y %S%M%H"), curr.strftime("%M/%d/%Y"))
         )
