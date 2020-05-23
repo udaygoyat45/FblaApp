@@ -14,6 +14,9 @@ $(document).ready(function () {
     });
 });
 
+$("flash-message").slideDown();
+
+
 $("#footer-collapse").click(function() {
     console.log("clicked!");
     $('html, body').animate({scrollTop: $(document).height()}, 'slow');

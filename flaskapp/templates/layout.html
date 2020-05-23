@@ -24,13 +24,12 @@
     background-attachment: fixed;">
 
 {% else %}
-
     <body>
         {% endif %}
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">
+        <div id="flash-message" class="alert alert-{{ category }}">
             {{ message }}
         </div>
         {% endfor %}
@@ -43,7 +42,6 @@
             <a href="{{ url_for('home') }}">
                 <img class="navbar-brand" width="100" id="brand-logo" src="../static/img/logo2.png">
             </a>
-            <div class="navbar-inner">
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -51,7 +49,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{url_for('home')}}">HOME<span
                                     class="sr-only">(current)</span></a>
@@ -68,43 +66,22 @@
                             </div>
                         </div>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                ACCOUNT
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {% if current_user.is_authenticated %}
-                                <a class="dropdown-item" href="{{ url_for('logout') }}">Log Out</a>
-                                <a class="dropdown-item" href="{{ url_for('account') }}">Account</a>
-
-                                {% else %}
-                                <a class="dropdown-item" href="{{ url_for('register') }}">Sign Up</a>
-                                <a class="dropdown-item" href="{{ url_for('login') }}">Log In</a>
-                                {% endif %}
-
-                            </div>
-                        </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="{{url_for('frequent')}}">FREQUENT FLYER PROGRAM <span
                                     class="sr-only"></span></a>
                         </li>
-
-
                     </ul>
 
-                    <ul class="navbar-nav my-2 my-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{url_for('job')}}"> JOIN US <span class="sr-only"></span></a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{url_for('about')}}">ABOUT US<span class="sr-only"></span></a>
-                        </li>
+                    <ul class="navbar-nav">
+                        {% if current_user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('account') }}">ACCOUNT</a></li> 
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">LOGOUT</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">REGISTER</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">LOGIN</a></li>
+                        {% endif %}
                     </ul>
                 </div>
-            </div>
         </nav>
         {% else %}
 
@@ -115,8 +92,6 @@
                     <img class="navbar-brand" width="100" id="brand-logo" src="../static/img/logo2.png">
                 </a>
 
-                <div class="navbar-inner">
-
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -124,7 +99,7 @@
                     </button>
 
                     <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
+                        <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url_for('home')}}">HOME<span
                                         class="sr-only">(current)</span></a>
@@ -142,33 +117,11 @@
                                 </div>
                             </div>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    ACCOUNT
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    {% if current_user.is_authenticated %}
-                                    <a class="dropdown-item" href="{{ url_for('logout') }}">Log Out</a>
-                                    <a class="dropdown-item" href="{{ url_for('account') }}">Account</a>
-
-                                    {% else %}
-                                    <a class="dropdown-item" href="{{ url_for('register') }}">Sign Up</a>
-                                    <a class="dropdown-item" href="{{ url_for('login') }}">Log In</a>
-                                    {% endif %}
-
-                                </div>
-                            </li>
-
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url_for('frequent')}}">FREQUENT FLYER PROGRAM <span
                                         class="sr-only"></span></a>
                             </li>
 
-
-                        </ul>
-
-                        <ul class="navbar-nav my-2 my-lg-0">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{url_for('job')}}"> JOIN US <span class="sr-only"></span></a>
                             </li>
@@ -178,8 +131,17 @@
                                         class="sr-only"></span></a>
                             </li>
                         </ul>
+
+                        <ul class="navbar-nav">
+                                    {% if current_user.is_authenticated %}
+                                    <li class="nav-item"><a class="nav-link" href="{{ url_for('account') }}">ACCOUNT</a></li> 
+                                    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">LOGOUT</a></li>
+                                    {% else %}
+                                    <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">REGISTER</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">LOGIN</a></li>
+                                    {% endif %}
+                        </ul>
                     </div>
-                </div>
             </nav>
 
             <div class="container mt-5">
@@ -229,37 +191,6 @@
         </div>
         {% endif %}
 
-
-
-        <!--footer for the website-->
-        <!-- <nav id="footer" class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a href="{{ url_for('home') }}">
-                <img class="navbar-brand" width="75" id="brand-logo" src="../static/img/logo2.png">
-            </a> <button class="navbar-toggler" id="footer-collapse" type="button" data-toggle="collapse"
-                data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('credits')}}">Credits</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i style="font-size: 200%;" class="fa fa-instagram"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i style="font-size: 200%;" class="fa fa-facebook"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i style="font-size: 200%;" class="fa fa-twitter"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i style="font-size: 200%;" class="fa fa-linkedin"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </nav> -->
-
         <div id="footer">
             <div class="jumbotron bg-dark mb-0" >
                 <div class="row text-white bebas mx-auto">
@@ -273,7 +204,7 @@
                         
                     </div>
                     <div class="col-2">
-                        <h3>About Us</h3>
+                        <h3>Information</h3>
                         <ul style="list-style: none; padding-left: 0px" class="b612">
                             <li><a href="{{url_for('credits')}}">Credits</a></li>
                             <li><a href="{{url_for('job')}}" >Join Us </a></li>
@@ -326,6 +257,7 @@
 
         <!--For the contact form-->
         <script src="../static/js/frequent.js"></script>
+        <script src="../static/js/every.js"></script>
 
     </body>
 
